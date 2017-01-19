@@ -8,6 +8,10 @@ import ISO8601
 
 
 -- Internal Imports
+
+import Silences.Types exposing (Silence, Matcher)
+
+
 -- Types
 
 
@@ -18,24 +22,6 @@ type alias Model =
     , route : Route
     , error : String
     , loading : Bool
-    }
-
-
-type alias Silence =
-    { id : Int
-    , createdBy : String
-    , comment : String
-    , startsAt : Time
-    , endsAt : Time
-    , createdAt : Time
-    , matchers : List Matcher
-    }
-
-
-type alias Time =
-    { t : ISO8601.Time
-    , s : String
-    , valid : Bool
     }
 
 
@@ -66,39 +52,14 @@ type alias RouteOpts =
     { receiver : String }
 
 
-type alias Matcher =
-    { name : String
-    , value : String
-    , isRegex : Bool
-    }
-
-
 type Msg
-    = SilenceFetch (Result Http.Error Silence)
-    | SilencesFetch (Result Http.Error (List Silence))
-    | SilenceCreate (Result Http.Error Int)
-    | SilenceDestroy (Result Http.Error Int)
-    | FetchSilences
-    | FetchSilence Int
-    | NewSilence
-    | EditSilence Int
-    | CreateSilence Silence
-    | DestroySilence Silence
-    | AlertGroupsFetch (Result Http.Error (List AlertGroup))
+    = AlertGroupsFetch (Result Http.Error (List AlertGroup))
     | FetchAlertGroups
     | RedirectAlerts
-    | DeleteMatcher Matcher
-    | AddMatcher
-    | UpdateMatcherName Matcher String
-    | UpdateMatcherValue Matcher String
-    | UpdateMatcherRegex Matcher Bool
-    | UpdateEndsAt String
-    | UpdateStartsAt String
-    | UpdateCreatedBy String
-    | UpdateComment String
     | SilenceFromAlert (List Matcher)
-    | Noop (List Matcher)
     | NewDefaultTimeRange Time.Time
+    | UpdateForm Silences.Types.Msg
+    | Noop
 
 
 type Route

@@ -111,9 +111,6 @@ update msg model =
         CreateSilence silence ->
             ( model, Silences.Api.create silence )
 
-        DestroySilence silence ->
-            ( model, Silences.Api.destroy silence )
-
         FetchAlertGroups ->
             ( { model | silence = nullSilence, route = AlertGroupsRoute }, Api.getAlertGroups )
 
@@ -179,43 +176,9 @@ update msg model =
             in
                 ( { model | silence = { sil | matchers = sil.matchers ++ [ Matcher "" "" False ] } }, Cmd.none )
 
-        DeleteMatcher matcher ->
+        UpdateForm msg matcher val ->
             let
-                s =
-                    model.silence
-
-                -- TODO: This removes all empty matchers. Maybe just remove the
-                -- one that was clicked.
-                newSil =
-                    { s | matchers = (List.filter (\x -> x /= matcher) s.matchers) }
-            in
-                ( { model | silence = newSil }, Cmd.none )
-
-        UpdateMatcherName matcher name ->
-            let
-                matchers =
-                    Utils.List.replaceIf (\x -> x == matcher) { matcher | name = name } model.silence.matchers
-
-                s =
-                    model.silence
-            in
-                ( { model | silence = { s | matchers = matchers } }, Cmd.none )
-
-        UpdateMatcherValue matcher value ->
-            let
-                matchers =
-                    Utils.List.replaceIf (\x -> x == matcher) { matcher | value = value } model.silence.matchers
-
-                s =
-                    model.silence
-            in
-                ( { model | silence = { s | matchers = matchers } }, Cmd.none )
-
-        UpdateMatcherRegex matcher bool ->
-            let
-                matchers =
-                    Utils.List.replaceIf (\x -> x == matcher) { matcher | isRegex = bool } model.silence.matchers
-
+                matchers = Silences.Api.update msg matcher val
                 s =
                     model.silence
             in

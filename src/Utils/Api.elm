@@ -2,7 +2,7 @@ module Utils.Api exposing (..)
 
 import Json.Decode as Json exposing (field)
 import ISO8601
-import Types exposing (Time)
+import Silences.Types
 
 
 stringtoISO8601 : Json.Decoder ISO8601.Time
@@ -19,9 +19,9 @@ stringtoISO8601 =
             )
 
 
-iso8601Time : String -> Json.Decoder Time
+iso8601Time : String -> Json.Decoder Silences.Types.Time
 iso8601Time fieldName =
-    Json.map3 Types.Time
+    Json.map3 Silences.Types.Time
         (field fieldName stringtoISO8601)
         (field fieldName Json.string)
         (field fieldName <| Json.succeed True)

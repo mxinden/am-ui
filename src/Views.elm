@@ -11,6 +11,7 @@ import Tuple
 
 -- Internal Imports
 
+import Silences.Types
 import Types exposing (..)
 import Utils.Date exposing (..)
 import Utils.Views exposing (..)
@@ -51,13 +52,6 @@ loading =
         ]
 
 
-todoView : a -> Html Msg
-todoView model =
-    div []
-        [ h1 [] [ text "todo" ]
-        ]
-
-
 alertGroupsView : AlertGroup -> Html Msg
 alertGroupsView alertGroup =
     li [ class "pa3 pa4-ns bb b--black-10" ]
@@ -86,15 +80,15 @@ alertView alert =
 
         b =
             if alert.silenced then
-                buttonLink "fa-deaf" ("#/silences/" ++ toString id) "blue" (Noop [])
+                buttonLink "fa-deaf" ("#/silences/" ++ toString id) "blue" Noop
             else
                 buttonLink "fa-exclamation-triangle" "#/silences/new" "dark-red" <|
-                    (SilenceFromAlert (List.map (\( k, v ) -> Matcher k v False) alert.labels))
+                    (SilenceFromAlert (List.map (\( k, v ) -> Silences.Types.Matcher k v False) alert.labels))
     in
         div [ class "f6 mb3" ]
             [ div [ class "mb1" ]
                 [ b
-                , buttonLink "fa-bar-chart" alert.generatorUrl "black" (Noop [])
+                , buttonLink "fa-bar-chart" alert.generatorUrl "black" Noop
                 , p [ class "dib mr2" ] [ text <| Utils.Date.dateFormat alert.startsAt ]
                 ]
             , div [ class "mb2 w-80-l w-100-m" ] (List.map labelButton <| List.filter (\( k, v ) -> k /= "alertname") alert.labels)
@@ -116,7 +110,7 @@ notFoundView model =
         ]
 
 
-genericListView : (a -> Html Msg) -> List a -> Html Msg
+genericListView : (a -> Html b) -> List a -> Html b
 genericListView fn list =
     ul
         [ classList

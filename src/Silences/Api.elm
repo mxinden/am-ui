@@ -1,7 +1,7 @@
 module Silences.Api exposing (..)
 
 import Http
-import Types exposing (Silence, Msg(..))
+import Silences.Types exposing (Silence, Msg(..))
 import Silences.Decoders exposing (..)
 import Silences.Encoders
 import Utils.Api exposing (baseUrl)
@@ -73,3 +73,5 @@ destroy silence =
                 , withCredentials = False
                 }
             )
+
+

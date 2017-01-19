@@ -3,7 +3,7 @@ module Utils.Date exposing (..)
 import Date exposing (Date, Month(..))
 import Time
 import ISO8601
-import Types
+import Silences.Types
 
 
 dateFormat : ISO8601.Time -> String
@@ -33,7 +33,7 @@ parseWithDefault default toParse =
     Result.withDefault default (ISO8601.fromString toParse)
 
 
-toISO8601Time : String -> Types.Time
+toISO8601Time : String -> Silences.Types.Time
 toISO8601Time toParse =
     case ISO8601.fromString toParse of
         Ok isoTime ->

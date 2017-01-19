@@ -8,7 +8,8 @@ import ISO8601
 
 -- Internal
 
-import Types exposing (Silence, Matcher)
+
+import Silences.Types exposing (Silence, Matcher)
 
 
 silence : Silence -> Encode.Value

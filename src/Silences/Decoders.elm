@@ -8,7 +8,7 @@ import Json.Decode as Json exposing (field)
 -- Internal
 
 import Utils.Api exposing (iso8601Time)
-import Types exposing (Silence, Matcher)
+import Silences.Types exposing (Silence, Matcher)
 
 
 show : Json.Decoder Silence
