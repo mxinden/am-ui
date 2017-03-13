@@ -9,10 +9,19 @@ import Translators exposing (alertTranslator, silenceTranslator)
 import Silences.Views
 import Silences.Types
 import Alerts.Views
+import NavBar.Views exposing (appHeader)
 
 
 view : Model -> Html Msg
 view model =
+    div []
+        [ appHeader model
+        , div [ class "pt6 w-80 center pa3" ]
+            [ appBody model ]
+        ]
+
+appBody : Model -> Html Msg
+appBody model =
     case model.route of
         AlertsRoute route ->
             case model.alertGroups of
