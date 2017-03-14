@@ -87,6 +87,8 @@ update msg model =
                 ( { model | silence = silence, silences = silences, route = SilencesRoute silencesRoute, filter = filter }
                 , Cmd.map silenceTranslator silencesCmd
                 )
+        NavigateToStatus ->
+            ({ model | route=StatusRoute }, Cmd.none)
 
         Silences silencesMsg ->
             let
@@ -132,6 +134,8 @@ urlUpdate location =
 
             AlertsRoute alertsRoute ->
                 NavigateToAlerts alertsRoute
+            StatusRoute ->
+                NavigateToStatus
 
             _ ->
                 -- TODO: 404 page
