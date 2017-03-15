@@ -4,7 +4,7 @@ module Types exposing (..)
 
 import Alerts.Types exposing (AlertGroup, AlertsMsg, Alert)
 import Silences.Types exposing (SilencesMsg, Silence)
-import Http exposing (Error)
+import Status.Types exposing (StatusModel, StatusMsg)
 import ISO8601
 import Time
 import Utils.Types exposing (ApiData, Filter)
@@ -21,6 +21,7 @@ type alias Model =
     , route : Route
     , filter : Filter
     , currentTime : ISO8601.Time
+    , status : StatusModel
     }
 
 
@@ -36,6 +37,7 @@ type Msg
     | NewUrl String
     | Noop
     | UpdateCurrentTime Time.Time
+    | MsgForStatus StatusMsg
 
 
 type Route
