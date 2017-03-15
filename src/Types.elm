@@ -4,10 +4,10 @@ module Types exposing (..)
 
 import Alerts.Types exposing (AlertGroup, AlertsMsg, Alert)
 import Silences.Types exposing (SilencesMsg, Silence)
-import Http exposing (Error)
 import ISO8601
 import Time
 import Utils.Types exposing (ApiData, Filter)
+import Material
 
 
 -- Internal Imports
@@ -21,6 +21,7 @@ type alias Model =
     , route : Route
     , filter : Filter
     , currentTime : ISO8601.Time
+    , mdl : Material.Model
     }
 
 
@@ -35,6 +36,7 @@ type Msg
     | NewUrl String
     | Noop
     | UpdateCurrentTime Time.Time
+    | Mdl (Material.Msg Msg)
 
 
 type Route

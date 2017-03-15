@@ -1,17 +1,20 @@
-module NavBar.Views exposing (appHeader)
+module NavBar.Views exposing (viewHeader)
 
 import Html exposing (Html, header, text, a, nav)
 import Html.Attributes exposing (class, href, title)
+import Material.Layout
 
 
-appHeader : List ( String, String ) -> Html msg
-appHeader links =
+viewHeader : List ( String, String ) -> Html msg
+viewHeader links =
     let
         headerLinks =
             List.map (\( link, text ) -> headerLink link text) links
     in
-        header [ class "bg-black-90 fixed w-100 ph3 pv3 pv4-ns ph4-m ph5-l" ]
-            [ nav [ class "w-80 center f6 fw6 ttu tracked" ]
+        Material.Layout.row []
+            [ Material.Layout.title [] [ text "Alertmanager" ]
+            , Material.Layout.spacer
+            , Material.Layout.navigation []
                 headerLinks
             ]
 

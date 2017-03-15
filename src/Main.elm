@@ -6,14 +6,13 @@ import Time
 import Parsing
 import Views
 import Alerts.Update
-import Alerts.Types exposing (Route(Receiver))
 import Types exposing (..)
 import Utils.Types exposing (..)
 import Utils.Date exposing (toISO8601, unixEpochStart)
-import Silences.Api
 import Silences.Types exposing (Silence, nullTime, nullSilence)
 import Silences.Update
 import Translators exposing (alertTranslator, silenceTranslator)
+import Material
 
 
 main : Program Never Model Msg
@@ -44,7 +43,7 @@ init location =
                     { text = Nothing, receiver = Nothing, showSilenced = Nothing }
 
         ( model, msg ) =
-            update (urlUpdate location) (Model Loading Loading Loading route filter unixEpochStart)
+            update (urlUpdate location) (Model Loading Loading Loading route filter unixEpochStart Material.model)
     in
         model ! [ msg, Task.perform UpdateCurrentTime Time.now ]
 
@@ -119,6 +118,9 @@ update msg model =
         UpdateCurrentTime time ->
             ( { model | currentTime = toISO8601 time }, Cmd.none )
 
+        Mdl msg ->
+            Material.update Mdl msg model
+
 
 urlUpdate : Navigation.Location -> Msg
 urlUpdate location =
@@ -145,4 +147,4 @@ urlUpdate location =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Material.subscriptions Mdl model

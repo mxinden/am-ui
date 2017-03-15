@@ -1,36 +1,46 @@
 module Views exposing (..)
 
 import Html exposing (Html, text, div)
-import Html.Attributes exposing (class)
-import Types exposing (Msg, Model, Route(SilencesRoute, AlertsRoute))
+import Types exposing (Msg(Mdl), Model, Route(SilencesRoute, AlertsRoute))
 import Utils.Types exposing (ApiResponse(..))
 import Utils.Views exposing (error, loading, notFoundView)
 import Translators exposing (alertTranslator, silenceTranslator)
 import Silences.Views
 import Alerts.Views
-import NavBar.Views exposing (appHeader)
+import NavBar.Views exposing (viewHeader)
+import Material.Scheme
+import Material.Layout
+import Material.Options
 
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ appHeader links
-        , div [ class "pt6 w-80 center pa3" ]
-            [ appBody model ]
-        ]
+    Material.Scheme.top <|
+        Material.Layout.render Mdl
+            model.mdl
+            [ Material.Layout.fixedHeader
+            , Material.Layout.fixedDrawer
+            , Material.Options.css "display" "flex !important"
+            , Material.Options.css "flex-direction" "row"
+            , Material.Options.css "align-items" "center"
+            ]
+            { header = [ viewHeader links ]
+            , drawer = []
+            , tabs = ( [], [] )
+            , main = [ viewBody model ]
+            }
 
 
 links : List ( String, String )
 links =
-    [ ( "#", "AlertManager" )
-    , ( "#/alerts", "Alerts" )
+    [ ( "#/alerts", "Alerts" )
     , ( "#/silences", "Silences" )
     , ( "#/status", "Status" )
     ]
 
 
-appBody : Model -> Html Msg
-appBody model =
+viewBody : Model -> Html Msg
+viewBody model =
     case model.route of
         AlertsRoute route ->
             case model.alertGroups of
