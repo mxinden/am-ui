@@ -24,19 +24,11 @@ view model =
             , Material.Options.css "flex-direction" "row"
             , Material.Options.css "align-items" "center"
             ]
-            { header = [ viewHeader links ]
+            { header = [ viewHeader model ]
             , drawer = []
             , tabs = ( [], [] )
             , main = [ viewBody model ]
             }
-
-
-links : List ( String, String )
-links =
-    [ ( "#/alerts", "Alerts" )
-    , ( "#/silences", "Silences" )
-    , ( "#/status", "Status" )
-    ]
 
 
 viewBody : Model -> Html Msg
