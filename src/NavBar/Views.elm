@@ -61,7 +61,7 @@ getSelectedTab currentRoute =
 links : List Link
 links =
     [ { url = "#/alerts", name = "Alerts", route = AlertsRoute (Alerts.Types.Receiver Nothing Nothing Nothing), icon = "alarm" }
-    , { url = "#/silences", name = "Silences", route = SilencesRoute (Silences.Types.ShowSilences Nothing), icon = "volume mute" }
+    , { url = "#/silences", name = "Silences", route = SilencesRoute (Silences.Types.ShowSilences Nothing), icon = "volume_mute" }
     , { url = "#/status", name = "Status", route = NotFound, icon = "info" }
     ]
 

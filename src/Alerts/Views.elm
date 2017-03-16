@@ -37,7 +37,7 @@ view route alertGroups filter errorHtml =
     in
         div []
             [ Html.map ForParent (textField "Filter" filterText (UpdateFilter filter))
-            , a [ class "f6 link br2 ba ph3 pv2 mr2 dib blue", onClick (ForSelf FilterAlerts) ] [ text "Filter Alerts" ]
+            , a [ class "f6 link br2 ba ph3 pv2 mr2 dib dark-red", onClick (ForSelf FilterAlerts) ] [ text "Filter Alerts" ]
             , errorHtml
             , alertHtml
             ]
@@ -77,7 +77,7 @@ alertView alert =
             [ div [ class "mb1" ]
                 [ b
                 , buttonLink "fa-bar-chart" alert.generatorUrl "black" (ForSelf Noop)
-                , p [ class "dib mr2" ] [ text <| Utils.Date.dateFormat alert.startsAt ]
+                , p [ class "dib mr2" ] [ text <| Utils.Date.timeFormat alert.startsAt ]
                 ]
             , div [ class "mb2 w-80-l w-100-m" ] (List.map labelButton <| List.filter (\( k, v ) -> k /= "alertname") alert.labels)
             ]

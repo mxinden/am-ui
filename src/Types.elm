@@ -1,7 +1,5 @@
 module Types exposing (..)
 
--- External Imports
-
 import Alerts.Types exposing (AlertGroup, AlertsMsg, Alert)
 import Silences.Types exposing (SilencesMsg, Silence)
 import ISO8601
@@ -10,17 +8,13 @@ import Utils.Types exposing (ApiData, Filter)
 import Material
 
 
--- Internal Imports
--- Types
-
-
 type alias Model =
     { silences : ApiData (List Silence)
     , silence : ApiData Silence
     , alertGroups : ApiData (List AlertGroup)
     , route : Route
     , filter : Filter
-    , currentTime : ISO8601.Time
+    , currentTime : Time.Time
     , mdl : Material.Model
     }
 
