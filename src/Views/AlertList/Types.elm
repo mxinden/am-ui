@@ -1,4 +1,4 @@
-module Alerts.Types exposing (..)
+module Views.AlertList.Types exposing (..)
 
 import Utils.Types exposing (ApiData, Filter)
 

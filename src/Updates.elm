@@ -1,7 +1,7 @@
 module Updates exposing (update)
 
 import Alerts.Api
-import Alerts.Update
+import Views.AlertList.Updates
 import Navigation
 import Silences.Types exposing (nullSilence)
 import Silences.Update
@@ -78,17 +78,17 @@ update msg model =
         NavigateToAlerts alertsRoute ->
             let
                 ( alertsMsg, filter ) =
-                    (Alerts.Update.urlUpdate alertsRoute)
+                    (Views.AlertList.Updates.urlUpdate alertsRoute)
 
                 ( alertGroups, cmd) =
-                    Alerts.Update.update alertsMsg model.alertGroups filter
+                    Views.AlertList.Updates.update alertsMsg model.alertGroups filter
             in
                 ( { model | alertGroups = alertGroups, route = AlertsRoute alertsRoute, filter = filter }, cmd)
 
         Alerts alertsMsg ->
             let
                 ( alertGroups, cmd) =
-                    Alerts.Update.update alertsMsg model.alertGroups model.filter
+                    Views.AlertList.Updates.update alertsMsg model.alertGroups model.filter
             in
                 ( { model | alertGroups = alertGroups }, cmd)
 
@@ -147,6 +147,6 @@ update msg model =
         MsgForAlerts msg ->
             let
                 (alertGroups, cmd) =
-                    Alerts.Update.update msg model.alertGroups model.filter
+                    Views.AlertList.Updates.update msg model.alertGroups model.filter
             in
                 ({model | alertGroups = alertGroups}, cmd)

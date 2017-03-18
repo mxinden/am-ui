@@ -11,7 +11,7 @@ import Utils.Views exposing (iconButtonMsg, checkbox, textField, formInput, form
 import Utils.Date
 import Utils.List
 import Time
-import Alerts.Views
+import Views.AlertList.Views
 
 
 view : Route -> ApiData (List Silence) -> ApiData Silence -> Time.Time -> Filter -> Html Msg
@@ -167,7 +167,7 @@ preview s =
     case s.silencedAlertGroups of
         Success alertGroups ->
             div []
-                (List.map Alerts.Views.compact alertGroups)
+                (List.map Views.AlertList.Views.compact alertGroups)
 
         Loading ->
             loading

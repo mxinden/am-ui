@@ -1,6 +1,6 @@
 module Types exposing (..)
 
-import Alerts.Types exposing (AlertGroup, AlertsMsg, Alert)
+import Views.AlertList.Types exposing (AlertGroup, AlertsMsg, Alert)
 import Silences.Types exposing (SilencesMsg, Silence)
 import Status.Types exposing (StatusModel, StatusMsg)
 import Utils.Types exposing (ApiData, Filter)
@@ -23,7 +23,7 @@ type Msg
     | PreviewSilence Silence
     | AlertGroupsPreview (ApiData (List AlertGroup))
     | UpdateFilter Filter String
-    | NavigateToAlerts Alerts.Types.Route
+    | NavigateToAlerts Views.AlertList.Types.Route
     | NavigateToSilences Silences.Types.Route
     | NavigateToStatus
     | Alerts AlertsMsg
@@ -38,7 +38,7 @@ type Msg
 
 type Route
     = SilencesRoute Silences.Types.Route
-    | AlertsRoute Alerts.Types.Route
+    | AlertsRoute Views.AlertList.Types.Route
     | StatusRoute
     | TopLevel
     | NotFound

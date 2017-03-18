@@ -1,6 +1,6 @@
-module Alerts.Filter exposing (receiver, silenced, matchers)
+module Views.AlertList.Filter exposing (receiver, silenced, matchers)
 
-import Alerts.Types exposing (Alert, AlertGroup, Block)
+import Views.AlertList.Types exposing (Alert, AlertGroup, Block)
 import Utils.Types exposing (Matchers)
 import Regex
 

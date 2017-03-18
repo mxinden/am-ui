@@ -1,7 +1,7 @@
-module Alerts.Update exposing (..)
+module Views.AlertList.Updates exposing (..)
 
 import Alerts.Api as Api
-import Alerts.Types exposing (..)
+import Views.AlertList.Types exposing (..)
 import Task
 import Utils.Types exposing (ApiData, ApiResponse(..), Filter)
 import Utils.Filter exposing (generateQueryString)
