@@ -1,8 +1,8 @@
 module Alerts.Api exposing (..)
 
+import Alerts.Types exposing (Alert, RouteOpts, Block, AlertGroup)
 import Json.Decode as Json exposing (..)
 import Utils.Api exposing (baseUrl, iso8601Time)
-import Views.AlertList.Types exposing (..)
 import Utils.Types exposing (ApiData, Filter)
 import Utils.Filter exposing (generateQueryString)
 import Types

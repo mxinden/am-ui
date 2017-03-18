@@ -3,7 +3,7 @@ module Silences.Types exposing (..)
 import Utils.Types exposing (Time, Duration, Matcher, Filter, ApiData, ApiResponse(..))
 import Utils.Date
 import Time
-import Views.AlertList.Types exposing (AlertGroup)
+import Alerts.Types exposing (AlertGroup)
 
 
 type alias Silence =

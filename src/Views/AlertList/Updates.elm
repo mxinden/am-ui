@@ -1,14 +1,15 @@
 module Views.AlertList.Updates exposing (..)
 
 import Alerts.Api as Api
-import Views.AlertList.Types exposing (..)
+import Views.AlertList.Types exposing (AlertListMsg(..), Route(Receiver))
+import Alerts.Types exposing (AlertGroup)
 import Task
 import Utils.Types exposing (ApiData, ApiResponse(..), Filter)
 import Utils.Filter exposing (generateQueryString)
 import Types exposing (Msg(MsgForAlerts, NewUrl))
 
 
-update : AlertsMsg -> ApiData (List AlertGroup) -> Filter -> ( ApiData (List AlertGroup), Cmd Types.Msg )
+update : AlertListMsg -> ApiData (List AlertGroup) -> Filter -> ( ApiData (List AlertGroup), Cmd Types.Msg )
 update msg groups filter =
     case msg of
         AlertGroupsFetch alertGroups ->
@@ -36,6 +37,6 @@ updateFilter route =
             }
 
 
-urlUpdate : Route -> ( AlertsMsg, Filter )
+urlUpdate : Route -> ( AlertListMsg, Filter )
 urlUpdate route =
     ( FetchAlertGroups, updateFilter route )

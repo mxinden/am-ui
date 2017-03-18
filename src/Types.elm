@@ -1,6 +1,7 @@
-module Types exposing (..)
+module Types exposing (Model, Msg(..), Route(..))
 
-import Views.AlertList.Types exposing (AlertGroup, AlertsMsg, Alert)
+import Alerts.Types exposing (AlertGroup, Alert)
+import Views.AlertList.Types exposing (AlertListMsg)
 import Silences.Types exposing (SilencesMsg, Silence)
 import Status.Types exposing (StatusModel, StatusMsg)
 import Utils.Types exposing (ApiData, Filter)
@@ -26,14 +27,14 @@ type Msg
     | NavigateToAlerts Views.AlertList.Types.Route
     | NavigateToSilences Silences.Types.Route
     | NavigateToStatus
-    | Alerts AlertsMsg
+    | Alerts AlertListMsg
     | Silences SilencesMsg
     | RedirectAlerts
     | NewUrl String
     | Noop
     | UpdateCurrentTime Time.Time
     | MsgForStatus StatusMsg
-    | MsgForAlerts AlertsMsg
+    | MsgForAlerts AlertListMsg
 
 
 type Route

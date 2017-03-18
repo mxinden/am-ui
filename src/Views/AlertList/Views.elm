@@ -1,6 +1,7 @@
 module Views.AlertList.Views exposing (view, compact)
 
-import Views.AlertList.Types exposing (Alert, AlertGroup, Block, Route(..), AlertsMsg(..))
+import Alerts.Types exposing (Alert, AlertGroup, Block)
+import Views.AlertList.Types exposing (Route(..), AlertListMsg(FilterAlerts))
 import Views.AlertList.Filter exposing (silenced, receiver, matchers)
 import Html exposing (..)
 import Html.Attributes exposing (..)
