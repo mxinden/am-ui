@@ -79,7 +79,7 @@ routeOptsDecoder =
 alertDecoder : Json.Decoder Alert
 alertDecoder =
     Json.map7 Alert
-        (field "annotations" (Json.keyValuePairs Json.string))
+        (Json.maybe (field "annotations" (Json.keyValuePairs Json.string)) |> andThen (unwrapWithDefault []))
         (field "labels" (Json.keyValuePairs Json.string))
         (field "inhibited" Json.bool)
         (Json.maybe (field "silenced" Json.string))
