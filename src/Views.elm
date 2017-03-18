@@ -5,7 +5,6 @@ import Html.Attributes exposing (class)
 import Types exposing (Msg, Model, Route(SilencesRoute, AlertsRoute, StatusRoute))
 import Utils.Types exposing (ApiResponse(..))
 import Utils.Views exposing (error, loading, notFoundView)
-import Translators exposing (silenceTranslator)
 import Silences.Views
 import Views.AlertList.Views
 import Status.Views
@@ -48,7 +47,7 @@ appBody model =
                     Views.AlertList.Views.view route [] model.filter (error msg)
 
         SilencesRoute route ->
-            Html.map silenceTranslator (Silences.Views.view route model.silences model.silence model.currentTime model.filter)
+            Silences.Views.view route model.silences model.silence model.currentTime model.filter
 
         _ ->
             notFoundView model

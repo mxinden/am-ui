@@ -8,7 +8,6 @@ import Silences.Update
 import Status.Api exposing (getStatus)
 import Status.Update
 import Task
-import Translators exposing ( silenceTranslator)
 import Types
     exposing
         ( Msg
@@ -16,6 +15,7 @@ import Types
             , Alerts
             , CreateSilenceFromAlert
             , MsgForAlerts
+            , MsgForSilences
             , MsgForStatus
             , NavigateToAlerts
             , NavigateToSilences
@@ -97,11 +97,11 @@ update msg model =
                 ( silencesMsg, filter ) =
                     (Silences.Update.urlUpdate silencesRoute)
 
-                ( silences, silence, silencesCmd ) =
+                ( silences, silence, cmd) =
                     Silences.Update.update silencesMsg model.silences model.silence filter
             in
                 ( { model | silence = silence, silences = silences, route = SilencesRoute silencesRoute, filter = filter }
-                , Cmd.map silenceTranslator silencesCmd
+                , cmd
                 )
 
         NavigateToStatus ->
@@ -109,11 +109,11 @@ update msg model =
 
         Silences silencesMsg ->
             let
-                ( silences, silence, silencesCmd ) =
+                ( silences, silence, cmd) =
                     Silences.Update.update silencesMsg model.silences model.silence model.filter
             in
                 ( { model | silences = silences, silence = silence }
-                , Cmd.map silenceTranslator silencesCmd
+                , cmd
                 )
 
         RedirectAlerts ->
@@ -150,3 +150,9 @@ update msg model =
                     Views.AlertList.Updates.update msg model.alertGroups model.filter
             in
                 ({model | alertGroups = alertGroups}, cmd)
+        MsgForSilences msg ->
+            let
+                (silences, silence, cmd) =
+                    Silences.Update.update msg model.silences model.silence model.filter
+            in
+                ({model | silences = silences, silence = silence }, cmd)

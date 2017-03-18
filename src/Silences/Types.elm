@@ -26,14 +26,8 @@ type Route
     | ShowEditSilence String
 
 
-type Msg
-    = ForSelf SilencesMsg
-    | ForParent OutMsg
-
-
 type OutMsg
-    = NewUrl String
-    | UpdateFilter Filter String
+    = UpdateFilter Filter String
     | UpdateCurrentTime Time.Time
     | PreviewSilence Silence
 
@@ -50,7 +44,6 @@ type SilencesMsg
     | UpdateCreatedBy Silence String
     | UpdateComment Silence String
     | NewDefaultTimeRange Time.Time
-    | Noop
     | SilenceCreate (ApiData String)
     | SilenceDestroy (ApiData String)
     | CreateSilence Silence

@@ -1,28 +1,29 @@
 module Silences.Update exposing (..)
 
 import Silences.Api as Api
-import Silences.Types exposing (..)
+import Silences.Types exposing (SilencesMsg(..), Route(..), nullMatcher, Silence, nullSilence)
 import Task
 import Utils.Types exposing (ApiData, ApiResponse(..), Filter, Matchers)
-import Utils.Types as Types exposing (ApiData, ApiResponse(..), Time, Filter, Matchers)
+import Utils.Types as Types exposing (ApiData, ApiResponse(Failure, Loading, Success), Time, Filter, Matchers)
 import Time
+import Types exposing (Msg(NewUrl, UpdateCurrentTime, PreviewSilence, MsgForSilences, Noop))
 import Utils.Date
 import Utils.List
 import Utils.Filter exposing (generateQueryString)
 
 
-update : SilencesMsg -> ApiData (List Silence) -> ApiData Silence -> Filter -> ( ApiData (List Silence), ApiData Silence, Cmd Msg )
+update : SilencesMsg -> ApiData (List Silence) -> ApiData Silence -> Filter -> ( ApiData (List Silence), ApiData Silence, Cmd Types.Msg )
 update msg silences silence filter =
     case msg of
         SilencesFetch sils ->
-            ( sils, silence, Cmd.map ForParent (Task.perform UpdateCurrentTime Time.now) )
+            ( sils, silence, Task.perform UpdateCurrentTime Time.now )
 
         SilenceFetch sil ->
             let
                 cmd =
                     case sil of
                         Success sil ->
-                            Task.perform ForParent <| Task.succeed (PreviewSilence sil)
+                            Task.perform identity (Task.succeed (PreviewSilence sil))
 
                         _ ->
                             Cmd.none
@@ -30,45 +31,36 @@ update msg silences silence filter =
                 ( silences, sil, cmd )
 
         FetchSilences ->
-            ( silences, silence, Api.getSilences filter )
+            ( silences, silence, Api.getSilences filter (SilencesFetch >> MsgForSilences) )
 
         FetchSilence id ->
-            ( silences, silence, Api.getSilence id )
+            ( silences, silence, Api.getSilence id (SilenceFetch >> MsgForSilences) )
 
         NewSilence ->
-            ( silences, silence, Cmd.map ForSelf (Task.perform NewDefaultTimeRange Time.now) )
+            ( silences, silence, Cmd.map MsgForSilences (Task.perform NewDefaultTimeRange Time.now) )
 
         CreateSilence silence ->
-            ( silences, Loading, Api.create silence )
+            ( silences, Loading, Api.create silence (SilenceCreate >> MsgForSilences))
 
         DestroySilence silence ->
-            ( silences, Loading, Api.destroy silence )
+            ( silences, Loading, Api.destroy silence (SilenceDestroy >> MsgForSilences))
 
         SilenceCreate silence ->
             case silence of
                 Success id ->
-                    ( silences, Loading, generateParentMsg <| NewUrl ("/#/silences/" ++ id) )
+                    ( silences, Loading, Task.perform identity (Task.succeed <| NewUrl ("/#/silences/" ++ id) ))
 
                 Failure err ->
-                    ( silences, Failure err, generateParentMsg <| NewUrl "/#/silences" )
+                    ( silences, Failure err, Task.perform identity (Task.succeed <| NewUrl "/#/silences" ))
 
                 Loading ->
-                    ( silences, Loading, generateParentMsg <| NewUrl "/#/silences" )
+                    ( silences, Loading, Task.perform identity (Task.succeed <| NewUrl "/#/silences" ))
 
         SilenceDestroy silence ->
             -- TODO: "Deleted id: ID" growl
             -- TODO: Add DELETE to accepted CORS methods in alertmanager
             -- TODO: Check why POST isn't there but is accepted
-            let
-                res =
-                    case silence of
-                        Failure err ->
-                            Failure err
-
-                        _ ->
-                            Loading
-            in
-                ( silences, res, generateParentMsg <| NewUrl "/#/silences" )
+                ( silences, Loading, Task.perform identity (Task.succeed <| NewUrl "/#/silences" ))
 
         UpdateStartsAt silence time ->
             -- TODO:
@@ -179,17 +171,11 @@ update msg silences silence filter =
                     "/#/silences" ++ generateQueryString filter
 
                 cmds =
-                    Cmd.batch [ generateParentMsg (NewUrl url) ]
+                    Task.perform identity (Task.succeed (NewUrl url))
             in
-                ( silences, silence, generateParentMsg (NewUrl url) )
-
-        Noop ->
-            ( silences, silence, Cmd.none )
+                ( silences, silence, Task.perform identity (Task.succeed <| NewUrl url ))
 
 
-generateParentMsg : OutMsg -> Cmd Msg
-generateParentMsg outMsg =
-    Task.perform ForParent (Task.succeed outMsg)
 
 
 urlUpdate : Route -> ( SilencesMsg, Filter )

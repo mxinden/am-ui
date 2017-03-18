@@ -5,13 +5,14 @@ module Silences.Views exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
-import Silences.Types exposing (Silence, SilencesMsg(..), Msg(..), OutMsg(UpdateFilter, PreviewSilence), Route(..))
+import Silences.Types exposing (Silence, SilencesMsg(..), Route(..))
 import Utils.Types exposing (Matcher, ApiResponse(..), Filter, ApiData)
 import Utils.Views exposing (iconButtonMsg, checkbox, textField, formInput, formField, buttonLink, error, loading)
 import Utils.Date
 import Utils.List
 import Time
 import Views.AlertList.Views
+import Types exposing (Msg(UpdateFilter, PreviewSilence, MsgForSilences, Noop))
 
 
 view : Route -> ApiData (List Silence) -> ApiData Silence -> Time.Time -> Filter -> Html Msg
@@ -82,8 +83,8 @@ silences silences filter errorHtml =
                     (List.map silenceList silences)
     in
         div []
-            [ Html.map ForParent (textField "Filter" filterText (UpdateFilter filter))
-            , a [ class "f6 link br2 ba ph3 pv2 mr2 dib blue", onClick (ForSelf FilterSilences) ] [ text "Filter Silences" ]
+            [ textField "Filter" filterText (UpdateFilter filter)
+            , a [ class "f6 link br2 ba ph3 pv2 mr2 dib blue", onClick (MsgForSilences FilterSilences) ] [ text "Filter Silences" ]
             , a [ class "f6 link br2 ba ph3 pv2 mr2 dib blue", href "#/silences/new" ] [ text "New Silence" ]
             , errorHtml
             , html
@@ -134,8 +135,8 @@ silenceBase silence =
                     [ text alertName ]
                 ]
             , div [ class "mb1" ]
-                [ buttonLink "fa-pencil" editUrl "blue" (ForSelf Noop)
-                , buttonLink "fa-trash-o" "#/silences" "dark-red" (ForSelf (DestroySilence silence))
+                [ buttonLink "fa-pencil" editUrl "blue" Noop
+                , buttonLink "fa-trash-o" "#/silences" "dark-red" (MsgForSilences (DestroySilence silence))
                 , p [ class "dib mr2" ] [ text <| "Until " ++ Utils.Date.timeFormat silence.endsAt ]
                 ]
             , div [ class "mb2 w-80-l w-100-m" ] (List.map matcherButton silence.matchers)
@@ -239,9 +240,9 @@ silenceForm kind silence =
                         , a [ class "f6 link br2 ba ph3 pv2 mr2 dib dark-red", href url ] [ text "Reset" ]
                         ]
                     ]
-                    |> (Html.map ForSelf)
+                    |> (Html.map MsgForSilences)
                 , div [ class "mt3" ]
-                    [ a [ class "f6 link br2 ba ph3 pv2 mr2 dib dark-green", onClick (ForParent (PreviewSilence silence)) ] [ text "Show Affected Alerts" ]
+                    [ a [ class "f6 link br2 ba ph3 pv2 mr2 dib dark-green", onClick <| PreviewSilence silence ] [ text "Show Affected Alerts" ]
                     ]
                 , preview silence
                 ]

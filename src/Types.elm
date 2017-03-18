@@ -35,6 +35,7 @@ type Msg
     | UpdateCurrentTime Time.Time
     | MsgForStatus StatusMsg
     | MsgForAlerts AlertListMsg
+    | MsgForSilences SilencesMsg
 
 
 type Route
