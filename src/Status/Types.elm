@@ -5,7 +5,6 @@ import Http exposing (Error)
 
 type StatusMsg
     = NewStatus (Result Http.Error StatusResponse)
-    | GetStatus
 
 
 type alias StatusModel =

@@ -33,6 +33,7 @@ type Msg
     | Noop
     | UpdateCurrentTime Time.Time
     | MsgForStatus StatusMsg
+    | MsgForAlerts AlertsMsg
 
 
 type Route

@@ -8,24 +8,25 @@ import Silences.Update
 import Status.Api exposing (getStatus)
 import Status.Update
 import Task
-import Translators exposing (alertTranslator, silenceTranslator)
+import Translators exposing ( silenceTranslator)
 import Types
     exposing
         ( Msg
             ( AlertGroupsPreview
             , Alerts
             , CreateSilenceFromAlert
+            , MsgForAlerts
+            , MsgForStatus
             , NavigateToAlerts
             , NavigateToSilences
             , NavigateToStatus
             , NewUrl
+            , Noop
             , PreviewSilence
             , RedirectAlerts
             , Silences
-            , UpdateFilter
-            , Noop
-            , MsgForStatus
             , UpdateCurrentTime
+            , UpdateFilter
             )
         , Model
         , Route(AlertsRoute, SilencesRoute, StatusRoute)
@@ -57,7 +58,7 @@ update msg model =
                 filter =
                     { nullFilter | text = Just <| Utils.List.mjoin s.matchers }
             in
-                ( { model | silence = Success silence }, Cmd.map alertTranslator (Alerts.Api.alertPreview filter) )
+                ( { model | silence = Success silence }, Alerts.Api.alertPreview filter )
 
         AlertGroupsPreview alertGroups ->
             let
@@ -79,17 +80,17 @@ update msg model =
                 ( alertsMsg, filter ) =
                     (Alerts.Update.urlUpdate alertsRoute)
 
-                ( alertGroups, alertCmd ) =
+                ( alertGroups, cmd) =
                     Alerts.Update.update alertsMsg model.alertGroups filter
             in
-                ( { model | alertGroups = alertGroups, route = AlertsRoute alertsRoute, filter = filter }, Cmd.map alertTranslator alertCmd )
+                ( { model | alertGroups = alertGroups, route = AlertsRoute alertsRoute, filter = filter }, cmd)
 
         Alerts alertsMsg ->
             let
-                ( alertGroups, alertCmd ) =
+                ( alertGroups, cmd) =
                     Alerts.Update.update alertsMsg model.alertGroups model.filter
             in
-                ( { model | alertGroups = alertGroups }, Cmd.map alertTranslator alertCmd )
+                ( { model | alertGroups = alertGroups }, cmd)
 
         NavigateToSilences silencesRoute ->
             let
@@ -143,3 +144,9 @@ update msg model =
                     Status.Update.update msg model.status
             in
                 ( { model | status = status }, cmd )
+        MsgForAlerts msg ->
+            let
+                (alertGroups, cmd) =
+                    Alerts.Update.update msg model.alertGroups model.filter
+            in
+                ({model | alertGroups = alertGroups}, cmd)

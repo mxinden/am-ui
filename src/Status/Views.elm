@@ -1,21 +1,17 @@
 module Status.Views exposing (view)
 
 import Html exposing (Html, text, button, div, li, ul, b)
-import Html.Events exposing (onClick)
-import Status.Types exposing (StatusMsg(GetStatus), StatusResponse)
+import Status.Types exposing  (StatusResponse)
 import Types exposing (Msg(MsgForStatus), Model)
 
 
 view : Model -> Html Types.Msg
 view model =
-    div []
-        [ button [ onClick (MsgForStatus <| GetStatus) ] [ text "Get Status" ]
-        , ul []
-            [ li []
-                [ b [] [ text "Status: " ], text (getStatus model.status.response) ]
-            , li []
-                [ b [] [ text "Uptime: " ], text (getUptime model.status.response) ]
-            ]
+    ul []
+        [ li []
+            [ b [] [ text "Status: " ], text (getStatus model.status.response) ]
+        , li []
+            [ b [] [ text "Uptime: " ], text (getUptime model.status.response) ]
         ]
 
 

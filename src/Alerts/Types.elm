@@ -7,22 +7,9 @@ type Route
     = Receiver (Maybe String) (Maybe Bool) (Maybe String)
 
 
-type Msg
-    = ForSelf AlertsMsg
-    | ForParent OutMsg
-
-
-type OutMsg
-    = SilenceFromAlert Alert
-    | UpdateFilter Filter String
-    | NewUrl String
-    | AlertGroupsPreview (ApiData (List AlertGroup))
-
-
 type AlertsMsg
     = AlertGroupsFetch (ApiData (List AlertGroup))
     | FetchAlertGroups
-    | Noop
     | FilterAlerts
 
 

@@ -96,7 +96,7 @@ error err =
 
                 BadPayload err resp ->
                     -- OK status, unexpected payload
-                    "unexpected response from api"
+                    "unexpected response from api" ++ err
 
                 BadUrl url ->
                     "malformed url: " ++ url
