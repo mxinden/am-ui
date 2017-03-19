@@ -8,7 +8,6 @@ type Route
 
     = ShowSilences (Maybe String)
     | ShowNewSilence
-    | ShowSilence String
     | ShowEditSilence String
 
 

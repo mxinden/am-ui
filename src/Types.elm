@@ -3,6 +3,7 @@ module Types exposing (Model, Msg(..), Route(..))
 import Alerts.Types exposing (AlertGroup, Alert)
 import Views.AlertList.Types exposing (AlertListMsg)
 import Views.SilenceList.Types exposing (SilencesMsg)
+import Views.Silence.Types exposing (SilenceMsg)
 import Silences.Types exposing (Silence)
 import Status.Types exposing (StatusModel, StatusMsg)
 import Utils.Types exposing (ApiData, Filter)
@@ -28,6 +29,7 @@ type Msg
     | NavigateToAlerts Views.AlertList.Types.Route
     | NavigateToSilences Views.SilenceList.Types.Route
     | NavigateToStatus
+    | NavigateToSilence String
     | Alerts AlertListMsg
     | Silences SilencesMsg
     | RedirectAlerts
@@ -37,11 +39,13 @@ type Msg
     | MsgForStatus StatusMsg
     | MsgForAlertList AlertListMsg
     | MsgForSilenceList SilencesMsg
+    | MsgForSilence SilenceMsg
 
 
 type Route
     = SilencesRoute Views.SilenceList.Types.Route
     | AlertsRoute Views.AlertList.Types.Route
+    | SilenceRoute String
     | StatusRoute
     | TopLevel
     | NotFound

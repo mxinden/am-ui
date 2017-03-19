@@ -2,11 +2,12 @@ module Views exposing (..)
 
 import Html exposing (Html, text, div)
 import Html.Attributes exposing (class)
-import Types exposing (Msg, Model, Route(SilencesRoute, AlertsRoute, StatusRoute))
+import Types exposing (Msg, Model, Route(SilencesRoute, AlertsRoute, StatusRoute, SilenceRoute))
 import Utils.Types exposing (ApiResponse(..))
 import Utils.Views exposing (error, loading, notFoundView)
 import Views.SilenceList.Views
 import Views.AlertList.Views
+import Views.Silence.Views
 import Status.Views
 import NavBar.Views exposing (appHeader)
 
@@ -34,6 +35,9 @@ appBody model =
     case model.route of
         StatusRoute ->
             Status.Views.view model
+
+        SilenceRoute silenceId ->
+            Views.Silence.Views.view model
 
         AlertsRoute route ->
             case model.alertGroups of

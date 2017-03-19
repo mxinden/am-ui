@@ -4,11 +4,14 @@ import Alerts.Api
 import Views.AlertList.Updates
 import Navigation
 import Silences.Types exposing (nullSilence)
+import Silences.Api exposing (getSilence)
 import Views.SilenceList.Updates
+import Views.Silence.Types exposing (SilenceMsg(SilenceFetched))
+import Views.Silence.Updates
 import Status.Api exposing (getStatus)
 import Status.Update
 import Task
-import Types exposing ( Msg(..), Model, Route(AlertsRoute, SilencesRoute, StatusRoute))
+import Types exposing ( Msg(..), Model, Route(AlertsRoute, SilencesRoute, StatusRoute, SilenceRoute))
 import Utils.List
 import Utils.Types
     exposing
@@ -85,6 +88,9 @@ update msg model =
         NavigateToStatus ->
             ( { model | route = StatusRoute }, getStatus )
 
+        NavigateToSilence silenceId->
+            ( { model | route = (SilenceRoute silenceId)}, getSilence silenceId (SilenceFetched >> MsgForSilence) )
+
         Silences silencesMsg ->
             let
                 ( silences, silence, cmd) =
@@ -134,3 +140,5 @@ update msg model =
                     Views.SilenceList.Updates.update msg model.silences model.silence model.filter
             in
                 ({model | silences = silences, silence = silence }, cmd)
+        MsgForSilence msg ->
+            Views.Silence.Updates.update msg model

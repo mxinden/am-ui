@@ -6,12 +6,15 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Views.SilenceList.Types exposing (SilencesMsg(..), Route(..))
+import Views.Shared.SilenceBase
+import Views.Shared.SilencePreview
 import Silences.Types exposing (Silence)
 import Utils.Types exposing (Matcher, ApiResponse(..), Filter, ApiData)
 import Utils.Views exposing (iconButtonMsg, checkbox, textField, formInput, formField, buttonLink, error, loading)
 import Utils.Date
 import Utils.List
 import Time
+
 import Views.AlertList.Views
 import Types exposing (Msg(UpdateFilter, PreviewSilence, MsgForSilenceList, Noop))
 
@@ -30,17 +33,6 @@ view route apiSilences apiSilence currentTime filter =
 
                 Failure msg ->
                     silences [] filter (error msg)
-
-        ShowSilence name ->
-            case apiSilence of
-                Success sil ->
-                    silence sil currentTime
-
-                Loading ->
-                    loading
-
-                Failure msg ->
-                    error msg
 
         ShowNewSilence ->
             case apiSilence of
@@ -96,103 +88,14 @@ silenceList : Silence -> Html Msg
 silenceList silence =
     li
         [ class "pa3 pa4-ns bb b--black-10" ]
-        [ silenceBase silence
+        [ Views.Shared.SilenceBase.view silence
         ]
 
 
-silence : Silence -> Time.Time -> Html Msg
-silence silence currentTime =
-    div []
-        [ silenceBase silence
-        , silenceExtra silence currentTime
-        , h2 [ class "h6 dark-red" ] [ text "Affected alerts" ]
-        , preview silence
-        ]
 
 
-silenceBase : Silence -> Html Msg
-silenceBase silence =
-    let
-        f =
-            List.filter (\m -> m.name == "alertname") silence.matchers
-
-        alertName =
-            case List.head f of
-                Just m ->
-                    m.value
-
-                Nothing ->
-                    ""
-
-        editUrl =
-            String.join "/" [ "#/silences", silence.id, "edit" ]
-    in
-        div [ class "f6 mb3" ]
-            [ a
-                [ class "db link blue mb3"
-                , href ("#/silences/" ++ silence.id)
-                ]
-                [ b [ class "db f4 mb1" ]
-                    [ text alertName ]
-                ]
-            , div [ class "mb1" ]
-                [ buttonLink "fa-pencil" editUrl "blue" Noop
-                , buttonLink "fa-trash-o" "#/silences" "dark-red" (MsgForSilenceList (DestroySilence silence))
-                , p [ class "dib mr2" ] [ text <| "Until " ++ Utils.Date.timeFormat silence.endsAt ]
-                ]
-            , div [ class "mb2 w-80-l w-100-m" ] (List.map matcherButton silence.matchers)
-            ]
 
 
-silenceExtra : Silence -> Time.Time -> Html msg
-silenceExtra silence currentTime =
-    div [ class "f6" ]
-        [ div [ class "mb1" ]
-            [ p []
-                [ text "Status: "
-                , Utils.Views.button "ph3 pv2" (status silence currentTime)
-                ]
-            , div []
-                [ label [ class "f6 dib mb2 mr2 w-40" ] [ text "Created by" ]
-                , p [] [ text silence.createdBy ]
-                ]
-            , div []
-                [ label [ class "f6 dib mb2 mr2 w-40" ] [ text "Comment" ]
-                , p [] [ text silence.comment ]
-                ]
-            ]
-        ]
-
-
-preview : Silence -> Html msg
-preview s =
-    case s.silencedAlertGroups of
-        Success alertGroups ->
-            div []
-                (List.map Views.AlertList.Views.compact alertGroups)
-
-        Loading ->
-            loading
-
-        Failure e ->
-            error e
-
-
-status : Silence -> Time.Time -> String
-status silence currentTime =
-    let
-        et =
-            Maybe.withDefault currentTime silence.endsAt.t
-
-        st =
-            Maybe.withDefault currentTime silence.startsAt.t
-    in
-        if et <= currentTime then
-            "expired"
-        else if st > currentTime then
-            "pending"
-        else
-            "active"
 
 
 silenceForm : String -> Silence -> Html Msg
@@ -245,7 +148,7 @@ silenceForm kind silence =
                 , div [ class "mt3" ]
                     [ a [ class "f6 link br2 ba ph3 pv2 mr2 dib dark-green", onClick <| PreviewSilence silence ] [ text "Show Affected Alerts" ]
                     ]
-                , preview silence
+                , Views.Shared.SilencePreview.view silence
                 ]
             ]
 
@@ -260,6 +163,3 @@ matcherForm silence matcher =
         ]
 
 
-matcherButton : Matcher -> Html msg
-matcherButton matcher =
-    Utils.Views.button "light-silver hover-black ph3 pv2" <| Utils.List.mstring matcher

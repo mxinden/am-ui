@@ -10,7 +10,6 @@ silencesParser =
         [ map ShowSilences list
         , map ShowNewSilence new
         , map ShowEditSilence edit
-        , map ShowSilence show
         ]
 
 
@@ -23,10 +22,6 @@ new : Parser a a
 new =
     s "silences" </> s "new"
 
-
-show : Parser (String -> a) a
-show =
-    s "silences" </> string
 
 
 edit : Parser (String -> a) a

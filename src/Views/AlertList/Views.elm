@@ -1,4 +1,4 @@
-module Views.AlertList.Views exposing (view, compact)
+module Views.AlertList.Views exposing (view)
 
 import Alerts.Types exposing (Alert, AlertGroup, Block)
 import Views.AlertList.Types exposing (Route(..), AlertListMsg(FilterAlerts))
@@ -44,28 +44,6 @@ view route alertGroups filter errorHtml =
             ]
 
 
-compact : AlertGroup -> Html msg
-compact ag =
-    let
-        alerts =
-            List.concatMap
-                (\b ->
-                    b.alerts
-                )
-                ag.blocks
-    in
-        ul
-            [ class "list pa0"
-            ]
-            (List.indexedMap alertCompact alerts)
-
-
-alertCompact : Int -> Alert -> Html msg
-alertCompact idx alert =
-    li [ class "mb2 w-80-l w-100-m" ]
-        [ span [] [ text <| toString (idx + 1) ++ ". " ]
-        , div [] (List.map labelButton alert.labels)
-        ]
 
 
 alertGroupView : AlertGroup -> Html Msg

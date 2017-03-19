@@ -34,8 +34,9 @@ update msg silences silence filter =
         FetchSilences ->
             ( silences, silence, Api.getSilences filter (SilencesFetch >> MsgForSilenceList) )
 
-        FetchSilence id ->
-            ( silences, silence, Api.getSilence id (SilenceFetch >> MsgForSilenceList) )
+        FetchSilence silenceId ->
+            (silences, silence, Api.getSilence silenceId (SilenceFetch >> MsgForSilenceList))
+
 
         NewSilence ->
             ( silences, silence, Cmd.map MsgForSilenceList (Task.perform NewDefaultTimeRange Time.now) )
@@ -186,9 +187,6 @@ urlUpdate route =
             case route of
                 ShowSilences _ ->
                     FetchSilences
-
-                ShowSilence uuid ->
-                    FetchSilence uuid
 
                 ShowNewSilence ->
                     NewSilence
