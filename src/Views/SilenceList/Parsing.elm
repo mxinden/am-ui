@@ -1,6 +1,6 @@
-module Silences.Parsing exposing (silencesParser)
+module Views.SilenceList.Parsing exposing (silencesParser)
 
-import Silences.Types exposing (..)
+import Views.SilenceList.Types exposing (..)
 import UrlParser exposing ((</>), (<?>), Parser, int, map, oneOf, parseHash, s, string, stringParam)
 
 

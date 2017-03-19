@@ -5,7 +5,7 @@ import Html.Attributes exposing (class)
 import Types exposing (Msg, Model, Route(SilencesRoute, AlertsRoute, StatusRoute))
 import Utils.Types exposing (ApiResponse(..))
 import Utils.Views exposing (error, loading, notFoundView)
-import Silences.Views
+import Views.SilenceList.Views
 import Views.AlertList.Views
 import Status.Views
 import NavBar.Views exposing (appHeader)
@@ -47,7 +47,7 @@ appBody model =
                     Views.AlertList.Views.view route [] model.filter (error msg)
 
         SilencesRoute route ->
-            Silences.Views.view route model.silences model.silence model.currentTime model.filter
+            Views.SilenceList.Views.view route model.silences model.silence model.currentTime model.filter
 
         _ ->
             notFoundView model

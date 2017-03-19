@@ -1,11 +1,12 @@
-module Silences.Views exposing (..)
+module Views.SilenceList.Views exposing (..)
 
 -- External Imports
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
-import Silences.Types exposing (Silence, SilencesMsg(..), Route(..))
+import Views.SilenceList.Types exposing (SilencesMsg(..), Route(..))
+import Silences.Types exposing (Silence)
 import Utils.Types exposing (Matcher, ApiResponse(..), Filter, ApiData)
 import Utils.Views exposing (iconButtonMsg, checkbox, textField, formInput, formField, buttonLink, error, loading)
 import Utils.Date

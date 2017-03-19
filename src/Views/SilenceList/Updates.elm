@@ -1,7 +1,8 @@
-module Silences.Update exposing (..)
+module Views.SilenceList.Updates exposing (..)
 
 import Silences.Api as Api
-import Silences.Types exposing (SilencesMsg(..), Route(..), nullMatcher, Silence, nullSilence)
+import Views.SilenceList.Types exposing (SilencesMsg(..), Route(..))
+import Silences.Types exposing (Silence, nullSilence, nullMatcher)
 import Task
 import Utils.Types exposing (ApiData, ApiResponse(..), Filter, Matchers)
 import Utils.Types as Types exposing (ApiData, ApiResponse(Failure, Loading, Success), Time, Filter, Matchers)

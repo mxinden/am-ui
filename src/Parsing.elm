@@ -1,7 +1,7 @@
 module Parsing exposing (..)
 
 import Views.AlertList.Parsing exposing (alertsParser)
-import Silences.Parsing exposing (silencesParser)
+import Views.SilenceList.Parsing exposing (silencesParser)
 import Status.Parsing exposing (statusParser)
 import Navigation
 import Types exposing (Route(..))

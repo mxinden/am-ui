@@ -8,7 +8,7 @@ import Views
 import Views.AlertList.Updates exposing (updateFilter)
 import Types exposing (..)
 import Utils.Types exposing (..)
-import Silences.Update
+import Views.SilenceList.Updates
 import Status.Types exposing (StatusModel)
 import Updates exposing (update)
 
@@ -35,7 +35,7 @@ init location =
                     updateFilter alertsRoute
 
                 SilencesRoute silencesRoute ->
-                    Silences.Update.updateFilter silencesRoute
+                    Views.SilenceList.Updates.updateFilter silencesRoute
 
                 _ ->
                     nullFilter
