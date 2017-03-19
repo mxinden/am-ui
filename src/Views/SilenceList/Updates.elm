@@ -7,7 +7,7 @@ import Task
 import Utils.Types exposing (ApiData, ApiResponse(..), Filter, Matchers)
 import Utils.Types as Types exposing (ApiData, ApiResponse(Failure, Loading, Success), Time, Filter, Matchers)
 import Time
-import Types exposing (Msg(NewUrl, UpdateCurrentTime, PreviewSilence, MsgForSilences, Noop))
+import Types exposing (Msg(NewUrl, UpdateCurrentTime, PreviewSilence, MsgForSilenceList, Noop))
 import Utils.Date
 import Utils.List
 import Utils.Filter exposing (generateQueryString)
@@ -32,19 +32,19 @@ update msg silences silence filter =
                 ( silences, sil, cmd )
 
         FetchSilences ->
-            ( silences, silence, Api.getSilences filter (SilencesFetch >> MsgForSilences) )
+            ( silences, silence, Api.getSilences filter (SilencesFetch >> MsgForSilenceList) )
 
         FetchSilence id ->
-            ( silences, silence, Api.getSilence id (SilenceFetch >> MsgForSilences) )
+            ( silences, silence, Api.getSilence id (SilenceFetch >> MsgForSilenceList) )
 
         NewSilence ->
-            ( silences, silence, Cmd.map MsgForSilences (Task.perform NewDefaultTimeRange Time.now) )
+            ( silences, silence, Cmd.map MsgForSilenceList (Task.perform NewDefaultTimeRange Time.now) )
 
         CreateSilence silence ->
-            ( silences, Loading, Api.create silence (SilenceCreate >> MsgForSilences))
+            ( silences, Loading, Api.create silence (SilenceCreate >> MsgForSilenceList))
 
         DestroySilence silence ->
-            ( silences, Loading, Api.destroy silence (SilenceDestroy >> MsgForSilences))
+            ( silences, Loading, Api.destroy silence (SilenceDestroy >> MsgForSilenceList))
 
         SilenceCreate silence ->
             case silence of

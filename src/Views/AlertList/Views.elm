@@ -9,7 +9,7 @@ import Html.Events exposing (onClick)
 import Utils.Date
 import Utils.Types exposing (Filter)
 import Utils.Views exposing (..)
-import Types exposing (Msg(MsgForAlerts, Noop, CreateSilenceFromAlert))
+import Types exposing (Msg(MsgForAlertList, Noop, CreateSilenceFromAlert))
 
 
 view : Route -> List AlertGroup -> Filter -> Html Msg -> Html Msg
@@ -38,7 +38,7 @@ view route alertGroups filter errorHtml =
     in
         div []
             [ textField "Filter" filterText (Types.UpdateFilter filter)
-            , a [ class "f6 link br2 ba ph3 pv2 mr2 dib dark-red", onClick (MsgForAlerts FilterAlerts) ] [ text "Filter Alerts" ]
+            , a [ class "f6 link br2 ba ph3 pv2 mr2 dib dark-red", onClick (MsgForAlertList FilterAlerts) ] [ text "Filter Alerts" ]
             , errorHtml
             , alertHtml
             ]

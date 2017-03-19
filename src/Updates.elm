@@ -8,29 +8,7 @@ import Views.SilenceList.Updates
 import Status.Api exposing (getStatus)
 import Status.Update
 import Task
-import Types
-    exposing
-        ( Msg
-            ( AlertGroupsPreview
-            , Alerts
-            , CreateSilenceFromAlert
-            , MsgForAlerts
-            , MsgForSilences
-            , MsgForStatus
-            , NavigateToAlerts
-            , NavigateToSilences
-            , NavigateToStatus
-            , NewUrl
-            , Noop
-            , PreviewSilence
-            , RedirectAlerts
-            , Silences
-            , UpdateCurrentTime
-            , UpdateFilter
-            )
-        , Model
-        , Route(AlertsRoute, SilencesRoute, StatusRoute)
-        )
+import Types exposing ( Msg(..), Model, Route(AlertsRoute, SilencesRoute, StatusRoute))
 import Utils.List
 import Utils.Types
     exposing
@@ -144,13 +122,13 @@ update msg model =
                     Status.Update.update msg model.status
             in
                 ( { model | status = status }, cmd )
-        MsgForAlerts msg ->
+        MsgForAlertList msg ->
             let
                 (alertGroups, cmd) =
                     Views.AlertList.Updates.update msg model.alertGroups model.filter
             in
                 ({model | alertGroups = alertGroups}, cmd)
-        MsgForSilences msg ->
+        MsgForSilenceList msg ->
             let
                 (silences, silence, cmd) =
                     Views.SilenceList.Updates.update msg model.silences model.silence model.filter

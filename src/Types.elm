@@ -35,8 +35,8 @@ type Msg
     | Noop
     | UpdateCurrentTime Time.Time
     | MsgForStatus StatusMsg
-    | MsgForAlerts AlertListMsg
-    | MsgForSilences SilencesMsg
+    | MsgForAlertList AlertListMsg
+    | MsgForSilenceList SilencesMsg
 
 
 type Route
