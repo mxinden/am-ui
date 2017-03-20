@@ -69,13 +69,13 @@ update msg model =
         SilenceCreate silence ->
             case silence of
                 Success id ->
-                    ( { model | silence = Loading }, Task.perform identity (Task.succeed <| NewUrl ("/#/silences/" ++ id)) )
+                    ( { model | silence = Loading }, Task.perform identity (Task.succeed <| NewUrl ("/#/silence/" ++ id)) )
 
                 Failure err ->
-                    ( { model | silence = Failure err }, Task.perform identity (Task.succeed <| NewUrl "/#/silences") )
+                    ( { model | silence = Failure err }, Task.perform identity (Task.succeed <| NewUrl "/#/silence") )
 
                 Loading ->
-                    ( { model | silence = Loading }, Task.perform identity (Task.succeed <| NewUrl "/#/silences") )
+                    ( { model | silence = Loading }, Task.perform identity (Task.succeed <| NewUrl "/#/silence") )
 
         UpdateComment silence comment ->
             ( { model | silence = Success { silence | comment = comment } }, Cmd.none )

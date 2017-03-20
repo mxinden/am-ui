@@ -11,7 +11,7 @@ import Views.AlertList.Views
 import Views.Silence.Views
 import Views.NotFound.Views
 import Views.Status.Views
-import NavBar.Views exposing (appHeader)
+import Views.NavBar.Views exposing (appHeader)
 
 
 view : Model -> Html Msg

@@ -46,7 +46,7 @@ silenceForm kind silence =
     -- TODO: Add field validations.
     let
         base =
-            "/#/silences/"
+            "/#/silence/"
 
         boundMatcherForm =
             matcherForm silence
