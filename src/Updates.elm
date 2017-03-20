@@ -20,6 +20,7 @@ import Views.SilenceForm.Updates
 import Views.SilenceList.Updates
 import Views.Status.Types exposing (StatusMsg(InitStatusView))
 import Views.Status.Updates
+import String exposing (trim)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -107,7 +108,7 @@ update msg model =
         UpdateFilter filter text ->
             let
                 t =
-                    if text == "" then
+                    if trim text == "" then
                         Nothing
                     else
                         Just text
