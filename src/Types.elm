@@ -24,34 +24,33 @@ type alias Model =
 
 type Msg
     = CreateSilenceFromAlert Alert
-    | PreviewSilence Silence
     | AlertGroupsPreview (ApiData (List AlertGroup))
-    | UpdateFilter Filter String
-    | NavigateToAlerts Views.AlertList.Types.Route
-    | NavigateToSilenceList (Maybe String)
-    | NavigateToStatus
-    | NavigateToSilence String
-    | NavigateToSilenceFormNew
-    | NavigateToSilenceFormEdit String
-    | NavigateToNotFound
-    | Alerts AlertListMsg
-    | RedirectAlerts
-    | NewUrl String
-    | Noop
-    | UpdateCurrentTime Time.Time
-    | MsgForStatus StatusMsg
     | MsgForAlertList AlertListMsg
-    | MsgForSilenceList SilenceListMsg
     | MsgForSilence SilenceMsg
     | MsgForSilenceForm SilenceFormMsg
+    | MsgForSilenceList SilenceListMsg
+    | MsgForStatus StatusMsg
+    | NavigateToAlerts Views.AlertList.Types.Route
+    | NavigateToNotFound
+    | NavigateToSilence String
+    | NavigateToSilenceFormEdit String
+    | NavigateToSilenceFormNew
+    | NavigateToSilenceList (Maybe String)
+    | NavigateToStatus
+    | NewUrl String
+    | Noop
+    | PreviewSilence Silence
+    | RedirectAlerts
+    | UpdateCurrentTime Time.Time
+    | UpdateFilter Filter String
 
 
 type Route
-    = SilenceListRoute (Maybe String)
-    | AlertsRoute Views.AlertList.Types.Route
-    | SilenceRoute String
-    | SilenceFormNewRoute
+    = AlertsRoute Views.AlertList.Types.Route
+    | NotFoundRoute
     | SilenceFormEditRoute String
+    | SilenceFormNewRoute
+    | SilenceListRoute (Maybe String)
+    | SilenceRoute String
     | StatusRoute
     | TopLevelRoute
-    | NotFoundRoute

@@ -67,13 +67,6 @@ update msg model =
             in
                 ( { model | alertGroups = alertGroups, route = AlertsRoute alertsRoute, filter = filter }, cmd )
 
-        Alerts alertsMsg ->
-            let
-                ( alertGroups, cmd ) =
-                    Views.AlertList.Updates.update alertsMsg model.alertGroups model.filter
-            in
-                ( { model | alertGroups = alertGroups }, cmd )
-
         NavigateToSilenceList maybeFilter ->
             let
                 ( silencesMsg, filter ) =
