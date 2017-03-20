@@ -5,6 +5,7 @@ import Html exposing (Html, ul)
 import Html.Attributes exposing (class)
 import Views.Shared.AlertCompact
 
+
 view : AlertGroup -> Html msg
 view ag =
     let
@@ -19,4 +20,3 @@ view ag =
             [ class "list pa0"
             ]
             (List.indexedMap Views.Shared.AlertCompact.view alerts)
-

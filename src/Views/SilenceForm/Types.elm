@@ -4,6 +4,7 @@ import Silences.Types exposing (Silence)
 import Utils.Types exposing (Matcher, ApiData)
 import Time
 
+
 type SilenceFormMsg
     = AddMatcher Silence
     | NewDefaultTimeRange Time.Time

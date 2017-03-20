@@ -9,9 +9,10 @@ import Utils.Types exposing (Matcher, ApiResponse(Success, Loading, Failure))
 import Utils.Views exposing (loading, error, checkbox)
 import Views.Shared.SilencePreview
 import Utils.Views exposing (formField, iconButtonMsg, textField, formInput)
-import Views.SilenceForm.Types exposing
-    (SilenceFormMsg(UpdateStartsAt, UpdateCreatedBy, UpdateDuration, UpdateEndsAt, UpdateComment, AddMatcher, CreateSilence, DeleteMatcher, UpdateMatcherRegex, UpdateMatcherValue, UpdateMatcherName)
-    )
+import Views.SilenceForm.Types
+    exposing
+        ( SilenceFormMsg(UpdateStartsAt, UpdateCreatedBy, UpdateDuration, UpdateEndsAt, UpdateComment, AddMatcher, CreateSilence, DeleteMatcher, UpdateMatcherRegex, UpdateMatcherValue, UpdateMatcherName)
+        )
 
 
 editForm : Model -> Html Msg
@@ -25,6 +26,7 @@ editForm model =
 
         Failure msg ->
             error msg
+
 
 newForm : Model -> Html Msg
 newForm model =

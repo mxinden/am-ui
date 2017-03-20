@@ -1,7 +1,7 @@
 module Status.Views exposing (view)
 
 import Html exposing (Html, text, button, div, li, ul, b)
-import Status.Types exposing  (StatusResponse)
+import Status.Types exposing (StatusResponse)
 import Types exposing (Msg(MsgForStatus), Model)
 
 

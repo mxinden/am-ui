@@ -13,7 +13,7 @@ import Views.Silence.Updates
 import Status.Api exposing (getStatus)
 import Status.Update
 import Task
-import Types exposing ( Msg(..), Model, Route(AlertsRoute, SilenceListRoute, StatusRoute, SilenceRoute, SilenceFormEditRoute, SilenceFormNewRoute))
+import Types exposing (Msg(..), Model, Route(AlertsRoute, SilenceListRoute, StatusRoute, SilenceRoute, SilenceFormEditRoute, SilenceFormNewRoute))
 import Utils.List
 import Utils.Types
     exposing
@@ -63,24 +63,24 @@ update msg model =
                 ( alertsMsg, filter ) =
                     (Views.AlertList.Updates.urlUpdate alertsRoute)
 
-                ( alertGroups, cmd) =
+                ( alertGroups, cmd ) =
                     Views.AlertList.Updates.update alertsMsg model.alertGroups filter
             in
-                ( { model | alertGroups = alertGroups, route = AlertsRoute alertsRoute, filter = filter }, cmd)
+                ( { model | alertGroups = alertGroups, route = AlertsRoute alertsRoute, filter = filter }, cmd )
 
         Alerts alertsMsg ->
             let
-                ( alertGroups, cmd) =
+                ( alertGroups, cmd ) =
                     Views.AlertList.Updates.update alertsMsg model.alertGroups model.filter
             in
-                ( { model | alertGroups = alertGroups }, cmd)
+                ( { model | alertGroups = alertGroups }, cmd )
 
         NavigateToSilenceList maybeFilter ->
             let
                 ( silencesMsg, filter ) =
                     (Views.SilenceList.Updates.urlUpdate maybeFilter)
 
-                ( silences, silence, cmd) =
+                ( silences, silence, cmd ) =
                     Views.SilenceList.Updates.update silencesMsg model.silences model.silence filter
             in
                 ( { model | silence = silence, silences = silences, route = SilenceListRoute maybeFilter, filter = filter }
@@ -90,18 +90,18 @@ update msg model =
         NavigateToStatus ->
             ( { model | route = StatusRoute }, getStatus )
 
-        NavigateToSilence silenceId->
-            ( { model | route = (SilenceRoute silenceId)}, getSilence silenceId (SilenceFetched >> MsgForSilence) )
+        NavigateToSilence silenceId ->
+            ( { model | route = (SilenceRoute silenceId) }, getSilence silenceId (SilenceFetched >> MsgForSilence) )
 
         NavigateToSilenceFormNew ->
-            ({model | route = SilenceFormNewRoute}, Task.perform identity (Task.succeed <| ( MsgForSilenceForm NewSilence)))
+            ( { model | route = SilenceFormNewRoute }, Task.perform identity (Task.succeed <| (MsgForSilenceForm NewSilence)) )
 
         NavigateToSilenceFormEdit uuid ->
-            ( {model | route = SilenceFormEditRoute uuid }, Task.perform identity (Task.succeed <| (FetchSilence uuid |> MsgForSilenceForm)))
+            ( { model | route = SilenceFormEditRoute uuid }, Task.perform identity (Task.succeed <| (FetchSilence uuid |> MsgForSilenceForm)) )
 
         Silences silencesMsg ->
             let
-                ( silences, silence, cmd) =
+                ( silences, silence, cmd ) =
                     Views.SilenceList.Updates.update silencesMsg model.silences model.silence model.filter
             in
                 ( { model | silences = silences, silence = silence }
@@ -136,18 +136,21 @@ update msg model =
                     Status.Update.update msg model.status
             in
                 ( { model | status = status }, cmd )
+
         MsgForAlertList msg ->
             let
-                (alertGroups, cmd) =
+                ( alertGroups, cmd ) =
                     Views.AlertList.Updates.update msg model.alertGroups model.filter
             in
-                ({model | alertGroups = alertGroups}, cmd)
+                ( { model | alertGroups = alertGroups }, cmd )
+
         MsgForSilenceList msg ->
             let
-                (silences, silence, cmd) =
+                ( silences, silence, cmd ) =
                     Views.SilenceList.Updates.update msg model.silences model.silence model.filter
             in
-                ({model | silences = silences, silence = silence }, cmd)
+                ( { model | silences = silences, silence = silence }, cmd )
+
         MsgForSilence msg ->
             Views.Silence.Updates.update msg model
 

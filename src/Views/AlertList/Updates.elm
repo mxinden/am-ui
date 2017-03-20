@@ -13,18 +13,17 @@ update : AlertListMsg -> ApiData (List AlertGroup) -> Filter -> ( ApiData (List 
 update msg groups filter =
     case msg of
         AlertGroupsFetch alertGroups ->
-            (alertGroups, Cmd.none )
+            ( alertGroups, Cmd.none )
 
         FetchAlertGroups ->
-            ( groups, Api.getAlertGroups filter (AlertGroupsFetch >> MsgForAlertList))
+            ( groups, Api.getAlertGroups filter (AlertGroupsFetch >> MsgForAlertList) )
 
         FilterAlerts ->
             let
                 url =
                     "/#/alerts" ++ generateQueryString filter
             in
-                ( groups, Task.perform identity (Task.succeed (Types.NewUrl url)))
-
+                ( groups, Task.perform identity (Task.succeed (Types.NewUrl url)) )
 
 
 updateFilter : Route -> Filter

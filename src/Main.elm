@@ -6,19 +6,21 @@ import Time
 import Parsing
 import Views
 import Views.AlertList.Updates exposing (updateFilter)
-import Types exposing
-    (Route(..)
-    , Msg
-         (NavigateToSilenceList
-         , NavigateToSilence
-         , NavigateToSilenceFormEdit
-         , NavigateToSilenceFormNew
-         , NavigateToAlerts
-         , NavigateToStatus
-         , UpdateCurrentTime
-         , RedirectAlerts
-         )
-    , Model)
+import Types
+    exposing
+        ( Route(..)
+        , Msg
+            ( NavigateToSilenceList
+            , NavigateToSilence
+            , NavigateToSilenceFormEdit
+            , NavigateToSilenceFormNew
+            , NavigateToAlerts
+            , NavigateToStatus
+            , UpdateCurrentTime
+            , RedirectAlerts
+            )
+        , Model
+        )
 import Utils.Types exposing (..)
 import Views.SilenceList.Updates
 import Status.Types exposing (StatusModel)

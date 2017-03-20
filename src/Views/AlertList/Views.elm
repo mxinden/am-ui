@@ -44,8 +44,6 @@ view route alertGroups filter errorHtml =
             ]
 
 
-
-
 alertGroupView : AlertGroup -> Html Msg
 alertGroupView alertGroup =
     li [ class "pa3 pa4-ns bb b--black-10" ]

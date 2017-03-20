@@ -8,11 +8,13 @@ import Task
 import Views.Shared.SilencePreview
 import Types exposing (Msg(PreviewSilence))
 
-update :  SilenceMsg -> Model -> ( Model, Cmd Msg)
+
+update : SilenceMsg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         FetchSilence id ->
             ( model, getSilence id (SilenceFetched >> MsgForSilence) )
+
         SilenceFetched s ->
             let
                 cmd =
@@ -23,7 +25,4 @@ update msg model =
                         _ ->
                             Cmd.none
             in
-                ( {model | silence = s}, cmd )
-
-
-
+                ( { model | silence = s }, cmd )

@@ -6,6 +6,7 @@ import Utils.Types exposing (ApiResponse(Success, Loading, Failure))
 import Views.Shared.AlertListCompact
 import Utils.Views exposing (error, loading)
 
+
 view : Silence -> Html msg
 view s =
     case s.silencedAlertGroups of

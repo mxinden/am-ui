@@ -10,6 +10,7 @@ import Utils.Views exposing (buttonLink)
 import Utils.Types exposing (Matcher)
 import Utils.List
 
+
 view : Silence -> Html Msg
 view silence =
     let
@@ -42,6 +43,7 @@ view silence =
                 ]
             , div [ class "mb2 w-80-l w-100-m" ] (List.map matcherButton silence.matchers)
             ]
+
 
 matcherButton : Matcher -> Html msg
 matcherButton matcher =

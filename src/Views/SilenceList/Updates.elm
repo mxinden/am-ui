@@ -19,19 +19,17 @@ update msg silences silence filter =
         SilencesFetch sils ->
             ( sils, silence, Task.perform UpdateCurrentTime Time.now )
 
-
         FetchSilences ->
             ( silences, silence, Api.getSilences filter (SilencesFetch >> MsgForSilenceList) )
 
         DestroySilence silence ->
-            ( silences, Loading, Api.destroy silence (SilenceDestroy >> MsgForSilenceList))
+            ( silences, Loading, Api.destroy silence (SilenceDestroy >> MsgForSilenceList) )
 
         SilenceDestroy silence ->
             -- TODO: "Deleted id: ID" growl
             -- TODO: Add DELETE to accepted CORS methods in alertmanager
             -- TODO: Check why POST isn't there but is accepted
-                ( silences, Loading, Task.perform identity (Task.succeed <| NewUrl "/#/silences" ))
-
+            ( silences, Loading, Task.perform identity (Task.succeed <| NewUrl "/#/silences") )
 
         FilterSilences ->
             let
@@ -41,20 +39,17 @@ update msg silences silence filter =
                 cmds =
                     Task.perform identity (Task.succeed (NewUrl url))
             in
-                ( silences, silence, Task.perform identity (Task.succeed <| NewUrl url ))
+                ( silences, silence, Task.perform identity (Task.succeed <| NewUrl url) )
 
 
-
-
-urlUpdate : (Maybe String) -> ( SilenceListMsg, Filter )
+urlUpdate : Maybe String -> ( SilenceListMsg, Filter )
 urlUpdate maybeString =
     ( FetchSilences, updateFilter maybeString )
 
 
-updateFilter : (Maybe String) -> Filter
+updateFilter : Maybe String -> Filter
 updateFilter maybeFilter =
-            { receiver = Nothing
-            , showSilenced = Nothing
-            , text = maybeFilter
-            }
-
+    { receiver = Nothing
+    , showSilenced = Nothing
+    , text = maybeFilter
+    }

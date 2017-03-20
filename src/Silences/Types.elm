@@ -4,6 +4,7 @@ import Utils.Date
 import Alerts.Types exposing (AlertGroup)
 import Utils.Types exposing (Duration, Time, Matcher, ApiData, ApiResponse(Success))
 
+
 nullSilence : Silence
 nullSilence =
     { id = ""
@@ -31,6 +32,7 @@ nullDuration =
 nullTime : Time
 nullTime =
     Utils.Date.fromTime 0
+
 
 type alias Silence =
     { id : String

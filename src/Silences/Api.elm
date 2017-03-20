@@ -46,7 +46,7 @@ create silence msg =
             |> Cmd.map msg
 
 
-destroy : Silence -> (ApiData String -> Msg ) -> Cmd Msg
+destroy : Silence -> (ApiData String -> Msg) -> Cmd Msg
 destroy silence msg =
     -- The incorrect route using "silences" receives a 405. The route seems to
     -- be matching on /silences and ignoring the :sid, should be getting a 404.

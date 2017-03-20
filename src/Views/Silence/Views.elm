@@ -53,6 +53,7 @@ silenceExtra silence currentTime =
             ]
         ]
 
+
 status : Silence -> Time.Time -> String
 status silence currentTime =
     let
@@ -68,4 +69,3 @@ status silence currentTime =
             "pending"
         else
             "active"
-
