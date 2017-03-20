@@ -59,6 +59,12 @@ urlUpdate location =
             SilenceRoute silenceId ->
                 NavigateToSilence silenceId
 
+            SilenceFormEditRoute silenceId ->
+                NavigateToSilenceFormEdit silenceId
+
+            SilenceFormNewRoute ->
+                NavigateToSilenceFormNew
+
             AlertsRoute alertsRoute ->
                 NavigateToAlerts alertsRoute
 

@@ -4,6 +4,7 @@ import Alerts.Types exposing (AlertGroup, Alert)
 import Views.AlertList.Types exposing (AlertListMsg)
 import Views.SilenceList.Types exposing (SilencesMsg)
 import Views.Silence.Types exposing (SilenceMsg)
+import Views.SilenceForm.Types exposing (SilenceFormMsg)
 import Silences.Types exposing (Silence)
 import Status.Types exposing (StatusModel, StatusMsg)
 import Utils.Types exposing (ApiData, Filter)
@@ -30,6 +31,8 @@ type Msg
     | NavigateToSilences Views.SilenceList.Types.Route
     | NavigateToStatus
     | NavigateToSilence String
+    | NavigateToSilenceFormNew
+    | NavigateToSilenceFormEdit String
     | Alerts AlertListMsg
     | Silences SilencesMsg
     | RedirectAlerts
@@ -40,12 +43,15 @@ type Msg
     | MsgForAlertList AlertListMsg
     | MsgForSilenceList SilencesMsg
     | MsgForSilence SilenceMsg
+    | MsgForSilenceForm SilenceFormMsg
 
 
 type Route
     = SilencesRoute Views.SilenceList.Types.Route
     | AlertsRoute Views.AlertList.Types.Route
     | SilenceRoute String
+    | SilenceFormNewRoute
+    | SilenceFormEditRoute String
     | StatusRoute
     | TopLevel
     | NotFound

@@ -3,6 +3,7 @@ module Parsing exposing (..)
 import Views.AlertList.Parsing exposing (alertsParser)
 import Views.SilenceList.Parsing exposing (silencesParser)
 import Views.Silence.Parsing exposing (silenceParser)
+import Views.SilenceForm.Parsing exposing (silenceFormNewParser, silenceFormEditParser)
 import Status.Parsing exposing (statusParser)
 import Navigation
 import Types exposing (Route(..))
@@ -57,6 +58,8 @@ routeParser =
         [ map SilencesRoute silencesParser
         , map StatusRoute statusParser
         , map SilenceRoute silenceParser
+        , map SilenceFormEditRoute silenceFormEditParser
+        , map SilenceFormNewRoute silenceFormNewParser
         , map AlertsRoute alertsParser
         , map TopLevel topLevelParser
         ]

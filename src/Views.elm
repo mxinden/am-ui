@@ -2,10 +2,11 @@ module Views exposing (..)
 
 import Html exposing (Html, text, div)
 import Html.Attributes exposing (class)
-import Types exposing (Msg, Model, Route(SilencesRoute, AlertsRoute, StatusRoute, SilenceRoute))
+import Types exposing (Msg, Model, Route(..))
 import Utils.Types exposing (ApiResponse(..))
 import Utils.Views exposing (error, loading, notFoundView)
 import Views.SilenceList.Views
+import Views.SilenceForm.Views
 import Views.AlertList.Views
 import Views.Silence.Views
 import Status.Views
@@ -52,6 +53,10 @@ appBody model =
 
         SilencesRoute route ->
             Views.SilenceList.Views.view route model.silences model.silence model.currentTime model.filter
+        SilenceFormNewRoute ->
+            Views.SilenceForm.Views.newForm model
+        SilenceFormEditRoute silenceId ->
+            Views.SilenceForm.Views.editForm model
 
         _ ->
             notFoundView model

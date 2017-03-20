@@ -7,11 +7,13 @@ import Silences.Types exposing (nullSilence)
 import Silences.Api exposing (getSilence)
 import Views.SilenceList.Updates
 import Views.Silence.Types exposing (SilenceMsg(SilenceFetched))
+import Views.SilenceForm.Types exposing (SilenceFormMsg(NewSilence, FetchSilence))
+import Views.SilenceForm.Updates
 import Views.Silence.Updates
 import Status.Api exposing (getStatus)
 import Status.Update
 import Task
-import Types exposing ( Msg(..), Model, Route(AlertsRoute, SilencesRoute, StatusRoute, SilenceRoute))
+import Types exposing ( Msg(..), Model, Route(AlertsRoute, SilencesRoute, StatusRoute, SilenceRoute, SilenceFormEditRoute, SilenceFormNewRoute))
 import Utils.List
 import Utils.Types
     exposing
@@ -91,6 +93,12 @@ update msg model =
         NavigateToSilence silenceId->
             ( { model | route = (SilenceRoute silenceId)}, getSilence silenceId (SilenceFetched >> MsgForSilence) )
 
+        NavigateToSilenceFormNew ->
+            ({model | route = SilenceFormNewRoute}, Task.perform identity (Task.succeed <| ( MsgForSilenceForm NewSilence)))
+
+        NavigateToSilenceFormEdit uuid ->
+            ( {model | route = SilenceFormEditRoute uuid }, Task.perform identity (Task.succeed <| (FetchSilence uuid |> MsgForSilenceForm)))
+
         Silences silencesMsg ->
             let
                 ( silences, silence, cmd) =
@@ -142,3 +150,6 @@ update msg model =
                 ({model | silences = silences, silence = silence }, cmd)
         MsgForSilence msg ->
             Views.Silence.Updates.update msg model
+
+        MsgForSilenceForm msg ->
+            Views.SilenceForm.Updates.update msg model

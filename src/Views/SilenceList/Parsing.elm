@@ -8,8 +8,6 @@ silencesParser : Parser (Route -> a) a
 silencesParser =
     oneOf
         [ map ShowSilences list
-        , map ShowNewSilence new
-        , map ShowEditSilence edit
         ]
 
 
@@ -18,12 +16,3 @@ list =
     s "silences" <?> stringParam "filter"
 
 
-new : Parser a a
-new =
-    s "silences" </> s "new"
-
-
-
-edit : Parser (String -> a) a
-edit =
-    s "silences" </> string </> s "edit"
