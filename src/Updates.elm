@@ -13,7 +13,19 @@ import Views.Silence.Updates
 import Status.Api exposing (getStatus)
 import Status.Update
 import Task
-import Types exposing (Msg(..), Model, Route(AlertsRoute, SilenceListRoute, StatusRoute, SilenceRoute, SilenceFormEditRoute, SilenceFormNewRoute))
+import Types exposing
+    (Msg(..)
+    , Model
+    , Route
+         (AlertsRoute
+         , SilenceListRoute
+         , StatusRoute
+         , SilenceRoute
+         , SilenceFormEditRoute
+         , SilenceFormNewRoute
+         , NotFoundRoute
+         )
+    )
 import Utils.List
 import Utils.Types
     exposing
@@ -98,6 +110,9 @@ update msg model =
 
         NavigateToSilenceFormEdit uuid ->
             ( { model | route = SilenceFormEditRoute uuid }, Task.perform identity (Task.succeed <| (FetchSilence uuid |> MsgForSilenceForm)) )
+
+        NavigateToNotFound ->
+            ( { model | route = NotFoundRoute }, Cmd.none)
 
         Silences silencesMsg ->
             let

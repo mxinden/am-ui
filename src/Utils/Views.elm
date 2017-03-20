@@ -65,11 +65,6 @@ formInput inputValue msg =
     Html.input [ class "input-reset ba br1 b--black-20 pa2 mb2 mr2 dib w-40", value inputValue, onInput msg ] []
 
 
-notFoundView : a -> Html msg
-notFoundView model =
-    div []
-        [ h1 [] [ text "not found" ]
-        ]
 
 
 loading : Html msg

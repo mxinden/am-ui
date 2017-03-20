@@ -4,11 +4,12 @@ import Html exposing (Html, text, div)
 import Html.Attributes exposing (class)
 import Types exposing (Msg, Model, Route(..))
 import Utils.Types exposing (ApiResponse(..))
-import Utils.Views exposing (error, loading, notFoundView)
+import Utils.Views exposing (error, loading)
 import Views.SilenceList.Views
 import Views.SilenceForm.Views
 import Views.AlertList.Views
 import Views.Silence.Views
+import Views.NotFound.Views
 import Status.Views
 import NavBar.Views exposing (appHeader)
 
@@ -60,5 +61,8 @@ appBody model =
         SilenceFormEditRoute silenceId ->
             Views.SilenceForm.Views.editForm model
 
-        _ ->
-            notFoundView model
+        TopLevelRoute ->
+            Utils.Views.loading
+
+        NotFoundRoute ->
+            Views.NotFound.Views.view

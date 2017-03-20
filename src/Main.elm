@@ -15,6 +15,7 @@ import Types
             , NavigateToSilenceFormEdit
             , NavigateToSilenceFormNew
             , NavigateToAlerts
+            , NavigateToNotFound
             , NavigateToStatus
             , UpdateCurrentTime
             , RedirectAlerts
@@ -85,9 +86,11 @@ urlUpdate location =
             StatusRoute ->
                 NavigateToStatus
 
-            _ ->
-                -- TODO: 404 page
+            TopLevelRoute ->
                 RedirectAlerts
+
+            NotFoundRoute ->
+                NavigateToNotFound
 
 
 

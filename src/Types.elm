@@ -33,6 +33,7 @@ type Msg
     | NavigateToSilence String
     | NavigateToSilenceFormNew
     | NavigateToSilenceFormEdit String
+    | NavigateToNotFound
     | Alerts AlertListMsg
     | Silences SilenceListMsg
     | RedirectAlerts
@@ -53,5 +54,5 @@ type Route
     | SilenceFormNewRoute
     | SilenceFormEditRoute String
     | StatusRoute
-    | TopLevel
-    | NotFound
+    | TopLevelRoute
+    | NotFoundRoute

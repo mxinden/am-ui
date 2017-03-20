@@ -6,10 +6,10 @@ import Views.Silence.Parsing exposing (silenceParser)
 import Views.SilenceForm.Parsing exposing (silenceFormNewParser, silenceFormEditParser)
 import Status.Parsing exposing (statusParser)
 import Navigation
-import Types exposing (Route(..))
-import UrlParser exposing ((</>), (<?>), Parser, int, map, oneOf, parseHash, s, string, stringParam)
+import UrlParser exposing ((</>), (<?>), Parser, int, map, oneOf, parseHash, s, string, stringParam, top)
 import Regex
 import Types exposing (Route(..))
+
 
 
 urlParser : Navigation.Location -> Route
@@ -44,12 +44,8 @@ urlParser location =
                 route
 
             Nothing ->
-                NotFound
+                Debug.log "inside nothing!" NotFoundRoute
 
-
-topLevelParser : Parser a a
-topLevelParser =
-    s ""
 
 
 routeParser : Parser (Route -> a) a
@@ -61,5 +57,5 @@ routeParser =
         , map SilenceFormEditRoute silenceFormEditParser
         , map SilenceFormNewRoute silenceFormNewParser
         , map AlertsRoute alertsParser
-        , map TopLevel topLevelParser
+        , map TopLevelRoute top
         ]
