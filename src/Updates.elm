@@ -91,8 +91,11 @@ update msg model =
 
         NavigateToSilence silenceId ->
             let
-                silenceMsg = InitSilenceView silenceId
-                cmd =  Task.perform identity (Task.succeed <| (MsgForSilence silenceMsg ))
+                silenceMsg =
+                    InitSilenceView silenceId
+
+                cmd =
+                    Task.perform identity (Task.succeed <| (MsgForSilence silenceMsg))
             in
                 ( { model | route = (SilenceRoute silenceId) }, cmd )
 
@@ -104,15 +107,6 @@ update msg model =
 
         NavigateToNotFound ->
             ( { model | route = NotFoundRoute }, Cmd.none )
-
-        Silences silencesMsg ->
-            let
-                ( silences, silence, cmd ) =
-                    Views.SilenceList.Updates.update silencesMsg model.silences model.silence model.filter
-            in
-                ( { model | silences = silences, silence = silence }
-                , cmd
-                )
 
         RedirectAlerts ->
             ( model, Task.perform NewUrl (Task.succeed "/#/alerts") )

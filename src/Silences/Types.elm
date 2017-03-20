@@ -46,4 +46,6 @@ type alias Silence =
     , silencedAlertGroups : ApiData (List AlertGroup)
     }
 
-type alias SilenceId = String
+
+type alias SilenceId =
+    String

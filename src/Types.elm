@@ -35,7 +35,6 @@ type Msg
     | NavigateToSilenceFormEdit String
     | NavigateToNotFound
     | Alerts AlertListMsg
-    | Silences SilenceListMsg
     | RedirectAlerts
     | NewUrl String
     | Noop

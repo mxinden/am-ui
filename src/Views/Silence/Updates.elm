@@ -25,5 +25,6 @@ update msg model =
                             Cmd.none
             in
                 ( { model | silence = s }, cmd )
+
         InitSilenceView silenceId ->
-            (model, getSilence silenceId (SilenceFetched >> MsgForSilence) )
+            ( model, getSilence silenceId (SilenceFetched >> MsgForSilence) )
