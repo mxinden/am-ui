@@ -1,4 +1,4 @@
-module Status.Parsing exposing (statusParser)
+module Views.Status.Parsing exposing (statusParser)
 
 import UrlParser exposing (Parser, s)
 

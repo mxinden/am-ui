@@ -65,8 +65,6 @@ formInput inputValue msg =
     Html.input [ class "input-reset ba br1 b--black-20 pa2 mb2 mr2 dib w-40", value inputValue, onInput msg ] []
 
 
-
-
 loading : Html msg
 loading =
     div []

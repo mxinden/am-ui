@@ -10,7 +10,7 @@ import Views.SilenceForm.Views
 import Views.AlertList.Views
 import Views.Silence.Views
 import Views.NotFound.Views
-import Status.Views
+import Views.Status.Views
 import NavBar.Views exposing (appHeader)
 
 
@@ -36,7 +36,7 @@ appBody : Model -> Html Msg
 appBody model =
     case model.route of
         StatusRoute ->
-            Status.Views.view model
+            Views.Status.Views.view model
 
         SilenceRoute silenceId ->
             Views.Silence.Views.view model

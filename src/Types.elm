@@ -5,8 +5,8 @@ import Views.AlertList.Types exposing (AlertListMsg)
 import Views.SilenceList.Types exposing (SilenceListMsg)
 import Views.Silence.Types exposing (SilenceMsg)
 import Views.SilenceForm.Types exposing (SilenceFormMsg)
+import Views.Status.Types exposing (StatusModel, StatusMsg)
 import Silences.Types exposing (Silence)
-import Status.Types exposing (StatusModel, StatusMsg)
 import Utils.Types exposing (ApiData, Filter)
 import Time
 

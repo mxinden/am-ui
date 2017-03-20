@@ -10,22 +10,23 @@ import Views.Silence.Types exposing (SilenceMsg(SilenceFetched))
 import Views.SilenceForm.Types exposing (SilenceFormMsg(NewSilence, FetchSilence))
 import Views.SilenceForm.Updates
 import Views.Silence.Updates
-import Status.Api exposing (getStatus)
-import Status.Update
+import Views.Status.Updates
+import Views.Status.Types exposing (StatusMsg(InitView))
 import Task
-import Types exposing
-    (Msg(..)
-    , Model
-    , Route
-         (AlertsRoute
-         , SilenceListRoute
-         , StatusRoute
-         , SilenceRoute
-         , SilenceFormEditRoute
-         , SilenceFormNewRoute
-         , NotFoundRoute
-         )
-    )
+import Types
+    exposing
+        ( Msg(..)
+        , Model
+        , Route
+            ( AlertsRoute
+            , SilenceListRoute
+            , StatusRoute
+            , SilenceRoute
+            , SilenceFormEditRoute
+            , SilenceFormNewRoute
+            , NotFoundRoute
+            )
+        )
 import Utils.List
 import Utils.Types
     exposing
@@ -100,7 +101,7 @@ update msg model =
                 )
 
         NavigateToStatus ->
-            ( { model | route = StatusRoute }, getStatus )
+            ( { model | route = StatusRoute }, Task.perform identity (Task.succeed <| (MsgForStatus InitView)) )
 
         NavigateToSilence silenceId ->
             ( { model | route = (SilenceRoute silenceId) }, getSilence silenceId (SilenceFetched >> MsgForSilence) )
@@ -112,7 +113,7 @@ update msg model =
             ( { model | route = SilenceFormEditRoute uuid }, Task.perform identity (Task.succeed <| (FetchSilence uuid |> MsgForSilenceForm)) )
 
         NavigateToNotFound ->
-            ( { model | route = NotFoundRoute }, Cmd.none)
+            ( { model | route = NotFoundRoute }, Cmd.none )
 
         Silences silencesMsg ->
             let
@@ -146,11 +147,7 @@ update msg model =
             ( { model | currentTime = time }, Cmd.none )
 
         MsgForStatus msg ->
-            let
-                ( status, cmd ) =
-                    Status.Update.update msg model.status
-            in
-                ( { model | status = status }, cmd )
+            Views.Status.Updates.update msg model
 
         MsgForAlertList msg ->
             let

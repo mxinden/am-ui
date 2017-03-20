@@ -24,7 +24,7 @@ import Types
         )
 import Utils.Types exposing (..)
 import Views.SilenceList.Updates
-import Status.Types exposing (StatusModel)
+import Views.Status.Types exposing (StatusModel, initStatusModel)
 import Updates exposing (update)
 
 
@@ -56,7 +56,7 @@ init location =
                     nullFilter
 
         ( model, msg ) =
-            update (urlUpdate location) (Model Loading Loading Loading route filter 0 (StatusModel Nothing))
+            update (urlUpdate location) (Model Loading Loading Loading route filter 0 initStatusModel)
     in
         model ! [ msg, Task.perform UpdateCurrentTime Time.now ]
 
