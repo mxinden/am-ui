@@ -11,5 +11,5 @@ update msg model =
         NewStatus apiResponse ->
             ( { model | status = { statusInfo = apiResponse } }, Cmd.none )
 
-        InitView ->
+        InitStatusView ->
             ( model, getStatus (NewStatus >> MsgForStatus) )

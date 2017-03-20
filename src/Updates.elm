@@ -1,32 +1,10 @@
 module Updates exposing (update)
 
 import Alerts.Api
-import Views.AlertList.Updates
 import Navigation
 import Silences.Types exposing (nullSilence)
-import Silences.Api exposing (getSilence)
-import Views.SilenceList.Updates
-import Views.Silence.Types exposing (SilenceMsg(SilenceFetched))
-import Views.SilenceForm.Types exposing (SilenceFormMsg(NewSilence, FetchSilence))
-import Views.SilenceForm.Updates
-import Views.Silence.Updates
-import Views.Status.Updates
-import Views.Status.Types exposing (StatusMsg(InitView))
 import Task
-import Types
-    exposing
-        ( Msg(..)
-        , Model
-        , Route
-            ( AlertsRoute
-            , SilenceListRoute
-            , StatusRoute
-            , SilenceRoute
-            , SilenceFormEditRoute
-            , SilenceFormNewRoute
-            , NotFoundRoute
-            )
-        )
+import Types exposing (Msg(..), Model, Route(NotFoundRoute, SilenceFormEditRoute, SilenceFormNewRoute, SilenceRoute, StatusRoute, SilenceListRoute, AlertsRoute))
 import Utils.List
 import Utils.Types
     exposing
@@ -34,6 +12,14 @@ import Utils.Types
         , Matcher
         , nullFilter
         )
+import Views.AlertList.Updates
+import Views.Silence.Types exposing (SilenceMsg(SilenceFetched, InitSilenceView))
+import Views.Silence.Updates
+import Views.SilenceForm.Types exposing (SilenceFormMsg(NewSilence, FetchSilence))
+import Views.SilenceForm.Updates
+import Views.SilenceList.Updates
+import Views.Status.Types exposing (StatusMsg(InitStatusView))
+import Views.Status.Updates
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -101,10 +87,14 @@ update msg model =
                 )
 
         NavigateToStatus ->
-            ( { model | route = StatusRoute }, Task.perform identity (Task.succeed <| (MsgForStatus InitView)) )
+            ( { model | route = StatusRoute }, Task.perform identity (Task.succeed <| (MsgForStatus InitStatusView)) )
 
         NavigateToSilence silenceId ->
-            ( { model | route = (SilenceRoute silenceId) }, getSilence silenceId (SilenceFetched >> MsgForSilence) )
+            let
+                silenceMsg = InitSilenceView silenceId
+                cmd =  Task.perform identity (Task.succeed <| (MsgForSilence silenceMsg ))
+            in
+                ( { model | route = (SilenceRoute silenceId) }, cmd )
 
         NavigateToSilenceFormNew ->
             ( { model | route = SilenceFormNewRoute }, Task.perform identity (Task.succeed <| (MsgForSilenceForm NewSilence)) )

@@ -5,7 +5,6 @@ import Types exposing (Model, Msg(MsgForSilence))
 import Silences.Api exposing (getSilence)
 import Utils.Types exposing (ApiResponse(Success))
 import Task
-import Views.Shared.SilencePreview
 import Types exposing (Msg(PreviewSilence))
 
 
@@ -26,3 +25,5 @@ update msg model =
                             Cmd.none
             in
                 ( { model | silence = s }, cmd )
+        InitSilenceView silenceId ->
+            (model, getSilence silenceId (SilenceFetched >> MsgForSilence) )

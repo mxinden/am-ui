@@ -6,7 +6,7 @@ import Utils.Types exposing (ApiData, ApiResponse(Loading))
 
 type StatusMsg
     = NewStatus (ApiData StatusResponse)
-    | InitView
+    | InitStatusView
 
 
 type alias StatusModel =

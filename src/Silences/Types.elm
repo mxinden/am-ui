@@ -1,4 +1,4 @@
-module Silences.Types exposing (Silence, nullSilence, nullMatcher, nullDuration, nullTime)
+module Silences.Types exposing (Silence, nullSilence, nullMatcher, nullDuration, nullTime, SilenceId)
 
 import Utils.Date
 import Alerts.Types exposing (AlertGroup)
@@ -35,7 +35,7 @@ nullTime =
 
 
 type alias Silence =
-    { id : String
+    { id : SilenceId
     , createdBy : String
     , comment : String
     , startsAt : Time
@@ -45,3 +45,5 @@ type alias Silence =
     , matchers : List Matcher
     , silencedAlertGroups : ApiData (List AlertGroup)
     }
+
+type alias SilenceId = String
