@@ -51,8 +51,8 @@ appBody model =
                 Failure msg ->
                     Views.AlertList.Views.view route [] model.filter (error msg)
 
-        SilencesRoute route ->
-            Views.SilenceList.Views.view route model.silences model.silence model.currentTime model.filter
+        SilenceListRoute route ->
+            Views.SilenceList.Views.view model.silences model.silence model.currentTime model.filter
         SilenceFormNewRoute ->
             Views.SilenceForm.Views.newForm model
         SilenceFormEditRoute silenceId ->

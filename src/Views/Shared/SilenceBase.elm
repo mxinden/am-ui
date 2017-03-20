@@ -4,7 +4,7 @@ import Html exposing (Html, div, a, p, text, b)
 import Html.Attributes exposing (class, href)
 import Silences.Types exposing (Silence)
 import Types exposing (Msg(Noop, MsgForSilenceList))
-import Views.SilenceList.Types exposing (SilencesMsg(DestroySilence))
+import Views.SilenceList.Types exposing (SilenceListMsg(DestroySilence))
 import Utils.Date
 import Utils.Views exposing (buttonLink)
 import Utils.Types exposing (Matcher)

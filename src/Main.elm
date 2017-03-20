@@ -6,7 +6,19 @@ import Time
 import Parsing
 import Views
 import Views.AlertList.Updates exposing (updateFilter)
-import Types exposing (..)
+import Types exposing
+    (Route(..)
+    , Msg
+         (NavigateToSilenceList
+         , NavigateToSilence
+         , NavigateToSilenceFormEdit
+         , NavigateToSilenceFormNew
+         , NavigateToAlerts
+         , NavigateToStatus
+         , UpdateCurrentTime
+         , RedirectAlerts
+         )
+    , Model)
 import Utils.Types exposing (..)
 import Views.SilenceList.Updates
 import Status.Types exposing (StatusModel)
@@ -34,7 +46,7 @@ init location =
                 AlertsRoute alertsRoute ->
                     updateFilter alertsRoute
 
-                SilencesRoute silencesRoute ->
+                SilenceListRoute silencesRoute ->
                     Views.SilenceList.Updates.updateFilter silencesRoute
 
                 _ ->
@@ -53,8 +65,8 @@ urlUpdate location =
             Parsing.urlParser location
     in
         case route of
-            SilencesRoute silencesRoute ->
-                NavigateToSilences silencesRoute
+            SilenceListRoute maybeFilter ->
+                NavigateToSilenceList maybeFilter
 
             SilenceRoute silenceId ->
                 NavigateToSilence silenceId

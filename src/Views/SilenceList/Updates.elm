@@ -1,19 +1,19 @@
 module Views.SilenceList.Updates exposing (..)
 
 import Silences.Api as Api
-import Views.SilenceList.Types exposing (SilencesMsg(..), Route(..))
+import Views.SilenceList.Types exposing (SilenceListMsg(..))
 import Silences.Types exposing (Silence, nullSilence, nullMatcher)
 import Task
 import Utils.Types exposing (ApiData, ApiResponse(..), Filter, Matchers)
 import Utils.Types as Types exposing (ApiData, ApiResponse(Failure, Loading, Success), Time, Filter, Matchers)
 import Time
-import Types exposing (Msg(NewUrl, UpdateCurrentTime, PreviewSilence, MsgForSilenceList, Noop))
+import Types exposing (Msg(NewUrl, UpdateCurrentTime, PreviewSilence, MsgForSilenceList, Noop), Route(SilenceListRoute))
 import Utils.Date
 import Utils.List
 import Utils.Filter exposing (generateQueryString)
 
 
-update : SilencesMsg -> ApiData (List Silence) -> ApiData Silence -> Filter -> ( ApiData (List Silence), ApiData Silence, Cmd Types.Msg )
+update : SilenceListMsg -> ApiData (List Silence) -> ApiData Silence -> Filter -> ( ApiData (List Silence), ApiData Silence, Cmd Types.Msg )
 update msg silences silence filter =
     case msg of
         SilencesFetch sils ->
@@ -46,21 +46,13 @@ update msg silences silence filter =
 
 
 
-urlUpdate : Route -> ( SilencesMsg, Filter )
-urlUpdate route =
-    let
-        msg =
-            case route of
-                ShowSilences _ ->
-                    FetchSilences
-    in
-        ( msg, updateFilter route )
+urlUpdate : (Maybe String) -> ( SilenceListMsg, Filter )
+urlUpdate maybeString =
+    ( FetchSilences, updateFilter maybeString )
 
 
-updateFilter : Route -> Filter
-updateFilter route =
-    case route of
-        ShowSilences maybeFilter ->
+updateFilter : (Maybe String) -> Filter
+updateFilter maybeFilter =
             { receiver = Nothing
             , showSilenced = Nothing
             , text = maybeFilter

@@ -1,7 +1,7 @@
 module Parsing exposing (..)
 
 import Views.AlertList.Parsing exposing (alertsParser)
-import Views.SilenceList.Parsing exposing (silencesParser)
+import Views.SilenceList.Parsing exposing (silenceListParser)
 import Views.Silence.Parsing exposing (silenceParser)
 import Views.SilenceForm.Parsing exposing (silenceFormNewParser, silenceFormEditParser)
 import Status.Parsing exposing (statusParser)
@@ -55,7 +55,7 @@ topLevelParser =
 routeParser : Parser (Route -> a) a
 routeParser =
     oneOf
-        [ map SilencesRoute silencesParser
+        [ map SilenceListRoute silenceListParser
         , map StatusRoute statusParser
         , map SilenceRoute silenceParser
         , map SilenceFormEditRoute silenceFormEditParser

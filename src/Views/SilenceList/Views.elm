@@ -5,7 +5,7 @@ module Views.SilenceList.Views exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
-import Views.SilenceList.Types exposing (SilencesMsg(..), Route(..))
+import Views.SilenceList.Types exposing (SilenceListMsg(..))
 import Views.Shared.SilenceBase
 import Views.Shared.SilencePreview
 import Silences.Types exposing (Silence)
@@ -18,20 +18,18 @@ import Views.AlertList.Views
 import Types exposing (Msg(UpdateFilter, PreviewSilence, MsgForSilenceList, Noop))
 
 
-view : Route -> ApiData (List Silence) -> ApiData Silence -> Time.Time -> Filter -> Html Msg
-view route apiSilences apiSilence currentTime filter =
-    case route of
-        ShowSilences _ ->
-            case apiSilences of
-                Success sils ->
-                    -- Add buttons at the top to filter Active/Pending/Expired
-                    silences sils filter (text "")
+view : ApiData (List Silence) -> ApiData Silence -> Time.Time -> Filter -> Html Msg
+view apiSilences apiSilence currentTime filter =
+    case apiSilences of
+        Success sils ->
+            -- Add buttons at the top to filter Active/Pending/Expired
+            silences sils filter (text "")
 
-                Loading ->
-                    loading
+        Loading ->
+            loading
 
-                Failure msg ->
-                    silences [] filter (error msg)
+        Failure msg ->
+            silences [] filter (error msg)
 
 
 silences : List Silence -> Filter -> Html Msg -> Html Msg
