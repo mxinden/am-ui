@@ -43,7 +43,7 @@ urlParser location =
                 route
 
             Nothing ->
-                Debug.log "inside nothing!" NotFoundRoute
+                NotFoundRoute
 
 
 routeParser : Parser (Route -> a) a

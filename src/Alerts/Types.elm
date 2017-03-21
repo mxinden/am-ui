@@ -16,7 +16,7 @@ type alias Alert =
 
 type alias AlertGroup =
     { blocks : List Block
-    , labels : Utils.Types.Labels
+    , labels : Labels
     }
 
 
