@@ -14,17 +14,13 @@ update msg model =
         FetchSilence id ->
             ( model, getSilence id (SilenceFetched >> MsgForSilence) )
 
-        SilenceFetched s ->
-            let
-                cmd =
-                    case s of
-                        Success sil ->
-                            Task.perform identity (Task.succeed (PreviewSilence sil))
+        SilenceFetched (Success sil) ->
+            ( { model | silence = Success sil }
+            , Task.perform PreviewSilence (Task.succeed sil)
+            )
 
-                        _ ->
-                            Cmd.none
-            in
-                ( { model | silence = s }, cmd )
+        SilenceFetched silence ->
+            ( { model | silence = silence }, Cmd.none )
 
         InitSilenceView silenceId ->
             ( model, getSilence silenceId (SilenceFetched >> MsgForSilence) )
