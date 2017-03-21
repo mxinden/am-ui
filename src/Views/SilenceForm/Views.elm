@@ -1,4 +1,4 @@
-module Views.SilenceForm.Views exposing (editForm, newForm)
+module Views.SilenceForm.Views exposing (edit, new)
 
 import Html exposing (Html, div, text, fieldset, legend, label, span, a)
 import Html.Attributes exposing (class, href)
@@ -15,8 +15,8 @@ import Views.SilenceForm.Types
         )
 
 
-editForm : Model -> Html Msg
-editForm model =
+edit : Model -> Html Msg
+edit model =
     case model.silence of
         Success silence ->
             silenceForm "Edit" silence
@@ -28,8 +28,8 @@ editForm model =
             error msg
 
 
-newForm : Model -> Html Msg
-newForm model =
+new : Model -> Html Msg
+new model =
     case model.silence of
         Success silence ->
             silenceForm "New" silence
