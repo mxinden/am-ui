@@ -14,16 +14,12 @@ import Utils.List
 view : Silence -> Html Msg
 view silence =
     let
-        f =
-            List.filter (\m -> m.name == "alertname") silence.matchers
-
         alertName =
-            case List.head f of
-                Just m ->
-                    m.value
-
-                Nothing ->
-                    ""
+            silence.matchers
+                |> List.filter (\m -> m.name == "alertname")
+                |> List.head
+                |> Maybe.map .value
+                |> Maybe.withDefault ""
 
         editUrl =
             String.join "/" [ "#/silences", silence.id, "edit" ]
