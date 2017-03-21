@@ -56,10 +56,10 @@ appBody model =
             SilenceList.view model.silences model.silence model.currentTime model.filter
 
         SilenceFormNewRoute ->
-            SilenceForm.new model
+            SilenceForm.new model.silence
 
         SilenceFormEditRoute silenceId ->
-            SilenceForm.edit model
+            SilenceForm.edit model.silence
 
         TopLevelRoute ->
             Utils.Views.loading

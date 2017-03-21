@@ -5,7 +5,7 @@ import Html.Attributes exposing (class, href)
 import Html.Events exposing (onClick)
 import Silences.Types exposing (Silence)
 import Types exposing (Msg(MsgForSilenceList, PreviewSilence, MsgForSilenceForm), Model)
-import Utils.Types exposing (Matcher, ApiResponse(Success, Loading, Failure))
+import Utils.Types exposing (Matcher, ApiResponse(Success, Loading, Failure), ApiData)
 import Utils.Views exposing (loading, error, checkbox)
 import Views.Shared.SilencePreview
 import Utils.Views exposing (formField, iconButtonMsg, textField, formInput)
@@ -15,9 +15,9 @@ import Views.SilenceForm.Types
         )
 
 
-edit : Model -> Html Msg
-edit model =
-    case model.silence of
+edit : ApiData Silence -> Html Msg
+edit silence =
+    case silence of
         Success silence ->
             silenceForm "Edit" silence
 
@@ -28,9 +28,9 @@ edit model =
             error msg
 
 
-new : Model -> Html Msg
-new model =
-    case model.silence of
+new : ApiData Silence -> Html Msg
+new silence =
+    case silence of
         Success silence ->
             silenceForm "New" silence
 
