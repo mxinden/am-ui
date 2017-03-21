@@ -4,7 +4,12 @@ import Alerts.Api
 import Navigation
 import Silences.Types exposing (nullSilence)
 import Task
-import Types exposing (Msg(..), Model, Route(NotFoundRoute, SilenceFormEditRoute, SilenceFormNewRoute, SilenceRoute, StatusRoute, SilenceListRoute, AlertsRoute))
+import Types
+    exposing
+        ( Msg(..)
+        , Model
+        , Route(NotFoundRoute, SilenceFormEditRoute, SilenceFormNewRoute, SilenceRoute, StatusRoute, SilenceListRoute, AlertsRoute)
+        )
 import Utils.List
 import Utils.Types
     exposing
