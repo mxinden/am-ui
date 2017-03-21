@@ -4,10 +4,9 @@ import Utils.Api exposing (baseUrl, send, get)
 import Utils.Types exposing (ApiData)
 import Status.Types exposing (StatusResponse)
 import Json.Decode exposing (Decoder, map2, string, field, at)
-import Types exposing (Msg(MsgForStatus))
 
 
-getStatus : (ApiData StatusResponse -> Msg) -> Cmd Msg
+getStatus : (ApiData StatusResponse -> msg) -> Cmd msg
 getStatus msg =
     let
         url =
